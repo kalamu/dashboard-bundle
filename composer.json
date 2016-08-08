@@ -1,0 +1,30 @@
+{
+    "name": "kalamu/dashboard-bundle",
+    "type": "library",
+    "description": "Configurable Bootstrap dashboard for Kalamu",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johan DESMYTER",
+            "email": "johan@etic.yt"
+        }
+    ],
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/kalamu/dashboard-bundle.git"
+        }
+    ],
+    "require": {
+        "php": ">=5.4",
+        "symfony/symfony": "2.*,>=2.3"
+    },
+    "autoload": {
+         "psr-4": { "Roho\\DashboardBundle\\": "" }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
