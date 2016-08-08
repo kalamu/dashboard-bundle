@@ -1,0 +1,9 @@
+parameters:
+    kalamu_dashboard.element_manager.class: Kalamu\DashboardBundle\Manager\ElementManager
+
+services:
+    
+    kalamu_dashboard.element_manager:
+        class: '%kalamu_dashboard.element_manager.class%'
+        arguments: ['@service_container']
+    
