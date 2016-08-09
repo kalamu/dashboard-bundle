@@ -5,5 +5,5 @@ services:
     
     kalamu_dashboard.element_manager:
         class: '%kalamu_dashboard.element_manager.class%'
-        arguments: ['@service_container']
+        arguments: ['@service_container', %kalamu_dashboard.contexts%]
     
