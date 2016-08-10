@@ -2,13 +2,7 @@
 
 namespace Kalamu\DashboardBundle\Manager;
 
-use Roho\DashboardBundle\Model\AbstractWidgetProvider;
-use Roho\DashboardBundle\Model\AbstractWidget;
-use Roho\DashboardBundle\Manager\WidgetTypeManager;
-use Roho\DashboardBundle\Exception\WidgetManagerException;
-use Roho\DashboardBundle\Entity\WidgetContext;
-use Roho\DashboardBundle\Entity\WidgetType;
-use Roho\DashboardBundle\Entity\WidgetService;
+use Kalamu\DashboardBundle\Exception\ElementManagerException;
 
 /**
  * Element Manager
@@ -70,7 +64,8 @@ class ElementManager
      * @return \Kalamu\DashboardBundle\ElementPersistenceInterface
      */
     public function getPersistence($context){
-        return $this->container->get($this->elements[$context]['persistence']);
+        
+        return $this->container->get($this->getContext($context)['persistence']);
     }
 
     /**
@@ -78,7 +73,7 @@ class ElementManager
      * @return array
      */
     public function getCategories($context, $type){
-        return array_keys($this->elements[$context]['types'][$type]);
+        return array_keys($this->getContextType($context, $type));
     }
 
 
@@ -87,7 +82,12 @@ class ElementManager
      * @param array
      */
     public function getElementsInCategorie($context, $type, $categorie){
-        return $this->elements[$context]['types'][$type][$categorie];
+        $infos = $this->getContextType($context, $type);
+        if(!isset($infos[$categorie])){
+            throw new ElementManagerException(sprintf("Unknown categorie '%s'", $categorie));
+        }
+        
+        return $infos[$categorie];
     }
 
     /**
@@ -98,4 +98,33 @@ class ElementManager
         return $this->container->get($element);
     }
 
+    /**
+     * Get infos of the type in context
+     * @param string $context
+     * @param string $type
+     * @return array
+     * @throws ElementManagerException
+     */
+    protected function getContextType($context, $type){
+        $infos = $this->getContext($context);
+        if(!isset($infos['types'][$type])){
+            throw new ElementManagerException(sprintf("The type '%s' is undefined in context '%s'", $type, $context));
+        }
+        
+        return $infos['types'][$type];
+    }
+    
+    /**
+     * Get the context infos
+     * @param string $context
+     * @return array
+     * @throws ElementManagerException
+     */
+    protected function getContext($context){
+        if(!isset($this->elements[$context])){
+            throw new ElementManagerException(sprintf("The context '%s' is undefined", $context));
+        }
+        
+        return $this->elements[$context];
+    }
 }
