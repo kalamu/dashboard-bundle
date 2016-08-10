@@ -1,0 +1,16 @@
+
+api_element_base_url:
+    path:     /
+    defaults: { _controller: KalamuDashboardBundle:ElementApi:categories }
+
+api_element_categories:
+    path:     /{context}/{type}
+    defaults: { _controller: KalamuDashboardBundle:ElementApi:categories }
+
+api_element_info:
+    path:     /{context}/{type}/{name}/info
+    defaults: { _controller: KalamuDashboardBundle:ElementApi:info }
+
+api_element_render:
+    path:     /{context}/{type}/{name}
+    defaults: { _controller: KalamuDashboardBundle:ElementApi:render }

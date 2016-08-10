@@ -17,6 +17,18 @@ abstract class AbstractElement
     protected $paramaters;
 
     /**
+     * Return the name of the element
+     * @return string
+     */
+    abstract public function getTitle();
+
+    /**
+     * Return the description of the element and his usage
+     * @return string
+     */
+    abstract public function getDescription();
+
+    /**
      * Render the element
      * @return string
      */

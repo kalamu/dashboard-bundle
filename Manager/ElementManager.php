@@ -49,14 +49,14 @@ class ElementManager
      * @param string $context
      * @param string $type
      * @param string $service_name
-     * @param string $categorie
+     * @param string $category
      */
-    protected function addElement($context, $type, $service_name, $categorie = 'default'){
+    protected function addElement($context, $type, $service_name, $category = 'default'){
         if(!isset($this->elements[$context]['types'][$type])){
-            $this->elements[$context]['types'][$type][$categorie] = [];
+            $this->elements[$context]['types'][$type][$category] = [];
         }
         
-        $this->elements[$context]['types'][$type][$categorie] = $service_name;
+        $this->elements[$context]['types'][$type][$category] = $service_name;
     }
     
     /**
@@ -78,23 +78,25 @@ class ElementManager
 
 
     /**
-     * Get the list of elements in the given categorie
+     * Get the list of elements in the given category
      * @param array
      */
-    public function getElementsInCategorie($context, $type, $categorie){
+    public function getElementsInCategory($context, $type, $category){
         $infos = $this->getContextType($context, $type);
-        if(!isset($infos[$categorie])){
-            throw new ElementManagerException(sprintf("Unknown categorie '%s'", $categorie));
+        if(!isset($infos[$category])){
+            throw new ElementManagerException(sprintf("Unknown category '%s'", $category));
         }
         
-        return $infos[$categorie];
+        return $infos[$category];
     }
 
     /**
      * Get the service responsible for the element
+     * @param string $context
+     * @param string $type
      * @param string $element
      */
-    public function getElement($element){
+    public function getElement($context, $type, $element){
         return $this->container->get($element);
     }
 

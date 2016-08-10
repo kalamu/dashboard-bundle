@@ -1,0 +1,10 @@
+{% trans_default_domain "kalamu" %}
+{
+{%- for category, elements in categories -%}
+    "{{category}}": {
+        {% for element in elements %}
+            "{{element}}": "{{element|trans}}"{{loop.last ? "" : ","}}
+        {% endfor %}
+    }{{loop.last ? "" : ","}}
+{%- endfor -%}
+}
