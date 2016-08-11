@@ -1,0 +1,10 @@
+list.categorie.element: Liste des éléments disponibles
+loading: Chargement...
+unknown.error: Impossible de continuer. Une erreur inattendue est survenue.
+select.element.in.list: "Sélectionnez le widget que vous souhaitez afficher dans la liste ci-dessous :"
+element.details: Détails de l'élément
+element.add: Ajouter
+element.edit: Mettre à jour
+return.list: Retour à la liste
+category: Catégorie
+invalid.element.parameter: Les paramètres de cet élément sont invalides.

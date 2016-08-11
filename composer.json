@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": ">=5.4",
-        "symfony/symfony": "2.*,>=2.3"
+        "symfony/symfony": "2.*,>=2.3",
+        "willdurand/js-translation-bundle": "2.5.*"
     },
     "autoload": {
          "psr-4": { "Roho\\DashboardBundle\\": "" }
