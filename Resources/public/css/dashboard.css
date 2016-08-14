@@ -1,0 +1,63 @@
+
+
+.kalamu-dashboard.editing .kalamu-dashboard-row{
+    margin-top: 1em;
+    margin-bottom: 2em;
+    /*border: 1px dotted #ccc;*/
+    /*border-width: 1px 0;*/
+    padding: 0.5em;
+    /*background: #fafafa;*/
+}
+
+.kalamu-dashboard.editing .kalamu-dashboard-col{
+    border: 1px solid #ccc;
+    padding: 0.5em;
+}
+
+.kalamu-dashboard .visible-editing{
+    display: none;
+}
+.kalamu-dashboard.editing .visible-editing{
+    display: block;
+}
+
+.kalamu-dashboard-col, .kalamu-dashboard-widget{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+
+.kalamu-dashboard.editing .kalamu-dashboard-col, .kalamu-dashboard.editing .kalamu-dashboard-widget{
+    padding-left: 11px;
+    padding-right: 11px;
+}
+
+.kalamu-dashboard .ui-state-highlight{
+    height: 150px;
+    background: #aaa;
+    border: 1px solid #555;
+}
+
+.kalamu-dashboard-widget.ui-sortable-handle{
+    cursor: move;
+}
+
+.dashboard-config{
+    padding: 0.5em;
+    background: #fafafa;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    margin-bottom: 0.5em;
+}
+
+.kalamu-dashboard-col .resizer-col{
+    width: 5px;
+    height: 20px;
+    float: right;
+    position: absolute;
+    right: -3px;
+    background: #eee;
+    border: 1px solid #ddd;
+    border-width: 0 1px;
+    cursor: col-resize;
+}

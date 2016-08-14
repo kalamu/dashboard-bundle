@@ -93,7 +93,7 @@ class ElementApiController extends Controller
         }
 
         $params['parent_md_size'] = $Request->get('parent_md_size', 12);
-        $element->applyParameters($params);
+        $element->setParameters($params);
 
         $view = $element->render( $this->get("templating"), ('json' == $format) ? 'edit' : 'publish' );
 
