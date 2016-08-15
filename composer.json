@@ -21,7 +21,7 @@
         "willdurand/js-translation-bundle": "2.5.*"
     },
     "autoload": {
-         "psr-4": { "Roho\\DashboardBundle\\": "" }
+         "psr-4": { "Kalamu\\DashboardBundle\\": "" }
     },
     "extra": {
         "branch-alias": {
