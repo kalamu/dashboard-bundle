@@ -123,6 +123,10 @@ $.widget( "kalamu.kalamuElementExplorer", {
      * @returns {undefined}
      */
     showElementInfos: function(identifier, params, category){
+        this._loadElements($.proxy(this._showElementInfos, this, identifier, params, category));
+    },
+    
+    _showElementInfos: function(identifier, params, category){
         category = category||this._findCategory(identifier);
         this.options.current_display = category+'.'+identifier;
 
@@ -134,7 +138,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
         }
         this.element.modal('show');
 
-        this._loadElementInfos(identifier, params, $.proxy(this._renderElementInfos, this, identifier));
+        this.loadElementInfos(identifier, params, $.proxy(this._renderElementInfos, this, identifier));
     },
     
     /**
@@ -144,7 +148,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
      * @param {type} callback
      * @returns {undefined}
      */
-    _loadElementInfos: function(identifier, params, callback){
+    loadElementInfos: function(identifier, params, callback){
         request = {
             url: this.options.element_api+this.options.element_context+'/'+this.options.type+'/'+identifier+'/info',
             method: 'GET',

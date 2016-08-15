@@ -30,8 +30,6 @@ $.widget( "kalamu.kalamuCmsDashboard", {
         this.removeSortable();
         this.addSortable();
         
-        console.log("refresh sortable");
-        
         this.element.append( this.element.find('>.stick-bottom').detach() );
     },
     
@@ -62,9 +60,29 @@ $.widget( "kalamu.kalamuCmsDashboard", {
         if(this.options.enable_section){
             this.options.genericRow.on('kalamu.dashboard.add_section', $.proxy(function(e){
                 e.preventDefault();
-                console.log("TODO: add section");
+                
+                this.options.explorerSection.kalamuElementExplorer('showElements');
+
+                addSectionFct = $.proxy(this._addSection, this);
+                this.options.explorerSection.on('kalamu.dashboard.valid_element', addSectionFct);
+                this.options.explorerSection.on('kalamu.dashboard.close_explorer', $.proxy(function(addSectionFct){
+                    this.options.explorerSection.off('kalamu.dashboard.valid_element', addSectionFct);
+                }, this, addSectionFct));
             }, this));
         }
+    },
+    
+    _addSection: function(e, infos){
+        section = $('<section>');
+        this.element.find('>.stick-bottom').before(section);
+        section.kalamuDashboardSection({
+            dashboard: this,
+            type: infos.type,
+            identifier: infos.identifier,
+            params: infos.params
+        });
+        
+        this.element.trigger('kalamu.dashboard.section_added');
     },
 
     /**
@@ -121,11 +139,10 @@ $.widget( "kalamu.kalamuCmsDashboard", {
             tolerance: 'pointer',
             placeholder: "ui-state-highlight col-md-12",
             opacity: 0.5,
-            stop: function(e, ui){
-                dashboard = ui.item.parents('.kalamu-dashboard')
-                dashboard.append( dashboard.find('>.stick-bottom').detach() );
-                $(this).trigger('kalamu.dashboard.move_row');
-            },
+            stop: $.proxy(function(e, ui){
+                this.element.append( this.element.find('>.stick-bottom').detach() );
+                this.element.trigger('kalamu.dashboard.move_row');
+            }, this),
             sort: function(event, ui) {
                 window_position = $(window).scrollTop();
                 window_height = $(window).height();

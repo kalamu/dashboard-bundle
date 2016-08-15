@@ -47,7 +47,6 @@ $.widget( "kalamu.kalamuDashboardWidget", {
 
     export: function(){
         return {
-            context: this.options.context,
             type: this.options.type,
             identifier: this.options.identifier,
             params: this.options.params

@@ -110,7 +110,6 @@ $.widget( "kalamu.kalamuDashboardCol", {
             params: infos.params
         });
         
-        console.log(this.options.explorer.kalamuElementExplorer('option', 'dashboard'));
         $(this.options.explorer.kalamuElementExplorer('option', 'dashboard')).trigger('kalamu.dashboard.widget_added');
     },
 
