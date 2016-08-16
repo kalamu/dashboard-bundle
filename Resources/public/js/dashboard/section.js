@@ -24,8 +24,8 @@ $.widget( "kalamu.kalamuDashboardSection", {
             enable_widget: true,
             enable_section: false
         });
-        if(this.options.childs){
-            this.options.innerDashboard.kalamuCmsDashboard('import', {childs: this.options.childs});
+        if(this.options._content){
+            this.options.innerDashboard.kalamuCmsDashboard('import', this.options._content);
         }
         
         this._updateTitle();
