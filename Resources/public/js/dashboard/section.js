@@ -24,8 +24,12 @@ $.widget( "kalamu.kalamuDashboardSection", {
             enable_widget: true,
             enable_section: false
         });
+        if(this.options.childs){
+            this.options.innerDashboard.kalamuCmsDashboard('import', {childs: this.options.childs});
+        }
         
         this._updateTitle();
+        
     },
     
     /**
@@ -63,10 +67,9 @@ $.widget( "kalamu.kalamuDashboardSection", {
             identifier: this.options.identifier,
             params: this.options.params,
         };
+        json._content = this.options.innerDashboard.kalamuCmsDashboard('export');
         
-        console.log(this.options.innerDashboard);
-
-        return $.extend(this.options.innerDashboard.kalamuCmsDashboard('export'), json);
+        return json;
     },
 
     up: function(e){

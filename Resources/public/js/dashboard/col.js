@@ -17,7 +17,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
             $.each(this.options.widgets, $.proxy(function(i, config){
                 widget = $('<div>');
                 this.element.append(widget);
-                config.dashboard = this.options.dashboard;
+                config.explorer = this.options.explorer;
                 widget.kalamuDashboardWidget(config);
             }, this));
         }

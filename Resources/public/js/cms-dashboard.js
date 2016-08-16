@@ -24,6 +24,10 @@ $.widget( "kalamu.kalamuCmsDashboard", {
         this.element.on('kalamu.dashboard.row_added kalamu.dashboard.section_added kalamu.dashboard.widget_added', $.proxy(function(){
             this._refresh();
         }, this));
+        
+        if(typeof this.afterCreate === 'function'){
+            this.afterCreate();
+        }
     },
     
     _refresh: function(){
@@ -120,11 +124,11 @@ $.widget( "kalamu.kalamuCmsDashboard", {
             if(child.type === 'row'){
                 row = $('<div>');
                 this.element.append(row);
-                row.kalamuDashboardRow( $.extend(child.datas, {explorer: this.options.explorerWidget}) );
+                row.kalamuDashboardRow( $.extend(child.datas, {dashboard: this}) );
             }else if(child.type === 'section'){
                 section = $('<section>');
                 this.element.append(section);
-                row.kalamuDashboardSection( $.extend(child.datas, {explorer: this.options.explorerSection}) );
+                section.kalamuDashboardSection( $.extend(child.datas, {dashboard: this}) );
             }
         }, this));
         
