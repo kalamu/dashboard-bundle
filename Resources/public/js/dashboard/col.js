@@ -22,7 +22,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
             }, this));
         }
 
-        link = $('<a href="#" title="'+Translator.trans('widget.add', {}, 'kalamu')+'"><strong><i class="fa fa-plus"></i></strong></a>');
+        link = $('<a href="#" title="'+Translator.trans('add.widget.link.title', {}, 'kalamu')+'"><strong><i class="fa fa-plus"></i></strong></a>');
         link.on('click', $.proxy(this._openExplorer, this));
         
         if(this.options.resizable){

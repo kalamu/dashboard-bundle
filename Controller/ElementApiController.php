@@ -88,7 +88,7 @@ class ElementApiController extends Controller
             if($form->isValid()){
                 $params = $form->getData();
             }else{
-                return $this->createJsonResponse(json_encode(array('error' => $this->get('translator')->trans('invalid.element.parameter', array(), 'kalamu') )));
+                return $this->createJsonResponse(json_encode(array('error' => $this->get('translator')->trans('element.parameters.invalid.error', array(), 'kalamu') )));
             }
         }
 
@@ -154,9 +154,9 @@ class ElementApiController extends Controller
         }
 
         if($intention == 'create'){
-            $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('element.add', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
+            $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('element.add.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
         }elseif($intention == 'edit'){
-            $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('element.edit', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
+            $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('element.edit.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
         }
 
         return $form;

@@ -13,7 +13,7 @@ $.widget( "kalamu.kalamuDashboardSection", {
 
         this.element.addClass('row kalamu-dashboard-section');
         
-        this.options.editLink = $('<a href="#" title="'+Translator.trans('section.edit.link', {}, 'kalamu')+'"><strong class="text-muted section-name"></strong></a>');
+        this.options.editLink = $('<a href="#" title="'+Translator.trans('element.sections.edit.link', {}, 'kalamu')+'"><strong class="text-muted section-name"></strong></a>');
         this.element.prepend( $('<div class="section-config mb10"></div>').append(this.options.editLink) )
         this._on(this.options.editLink, { 'click': this.editElement });
         

@@ -1,10 +1,27 @@
-list.categorie.element: Liste des éléments disponibles
-loading: Chargement...
-unknown.error: Impossible de continuer. Une erreur inattendue est survenue.
-select.element.in.list: "Sélectionnez le widget que vous souhaitez afficher dans la liste ci-dessous :"
-element.details: Détails de l'élément
-element.add: Ajouter
-element.edit: Mettre à jour
-return.list: Retour à la liste
-category: Catégorie
-invalid.element.parameter: Les paramètres de cet élément sont invalides.
+element.parameters.invalid.error: Les paramètres de cet élément sont invalides.
+element.add.button.label: Ajouter
+element.edit.button.label: Mettre à jour
+
+add.widget.link.title: Ajouter un Widget
+
+element.explorer.list.category.title: Liste des éléments disponibles
+element.explorer.list.category.description: Sélectionnez l'élément que vous souhaitez afficher dans la liste ci-dessous.
+element.explorer.loading: Chargement...
+element.explorer.close: Fermer
+element.explorer.unknown.error: Une erreur inattendue est survenue.
+
+element.explorer.element.title: Détails de l'élément
+element.explorer.list.link: Liste des éléments
+element.explorer.category: Catégorie
+
+element.generic_row.new_line.title: "Ajouter une ligne :"
+element.generic_row.line.add_n_col: '{1}1 Colonne|]1,Inf[ %col% Colonnes'
+element.generic_row.new_section.title: Ajouter une section
+
+element.row.delete: Supprimer la ligne
+element.row.up: Monter la ligne
+element.row.down: Descendre la ligne
+
+element.sections.edit.link: Modifier la section
+
+unknown.error: Une erreur inattendue est survenue.

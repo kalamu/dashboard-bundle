@@ -13,9 +13,9 @@ $.widget( "kalamu.kalamuDashboardRow", {
         }
         this.element.addClass('row kalamu-dashboard-row');
 
-        delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('row.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
-        linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('row.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
-        linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('row.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
+        delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('element.row.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
+        linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
+        linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
 
         config_row = $('<div class="col-md-12 visible-editing visible-editing-row text-right">').append(linkUp).append(linkDown).append(delete_link);
         this.element.append(config_row);

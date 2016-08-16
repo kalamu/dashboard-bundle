@@ -13,7 +13,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
     _create: function() {
         this.element.addClass('kalamu-element-explorer modal fade');
         this.element.append('<div class="modal-dialog modal-lg"><div class="modal-content">\n\
-                            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Fermer">\n\
+                            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="'+Translator.trans('element.explorer.close', {}, 'kalamu')+'">\n\
                             <span aria-hidden="true">&times;</span></button><h4 class="modal-title"></h4></div><div class="modal-body">\n\
                             </div></div></div>');
 
@@ -29,8 +29,8 @@ $.widget( "kalamu.kalamuElementExplorer", {
      */
     showElements: function(){
         if(this.options.current_display === 'elements'){ return this; }
-        this.element.find('.modal-title').text(Translator.trans('list.category.element', {}, 'kalamu'));
-        this.element.find('.modal-body').html("<i class='fa fa-refresh fa-spin'></i> "+Translator.trans('loading', {}, 'kalamu'));
+        this.element.find('.modal-title').text(Translator.trans('element.explorer.list.category.title', {}, 'kalamu'));
+        this.element.find('.modal-body').html("<i class='fa fa-refresh fa-spin'></i> "+Translator.trans('element.explorer.loading', {}, 'kalamu'));
 
         this._loadElements($.proxy(this._renderElements, this));
 
@@ -61,7 +61,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
                 callback();
             }, this, callback),
             error: $.proxy(function(){
-                this.throwError("unknown.error");
+                this.throwError("element.explorer.unknown.error");
             }, this)
         });
     },
@@ -73,7 +73,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
     _renderElements: function(){
 
         this.element.find('.modal-body')
-                .html("<p>"+Translator.trans('select.element.in.list', {}, 'kalamu')+"</p>")
+                .html("<p>"+Translator.trans('element.explorer.list.category.description', {}, 'kalamu')+"</p>")
                 .append('<div class="panel-group" role="tablist" id="element_selector" aria-multiselectable="true">');
 
         panelGroup = this.element.find('.modal-body .panel-group');
@@ -130,8 +130,8 @@ $.widget( "kalamu.kalamuElementExplorer", {
         category = category||this._findCategory(identifier);
         this.options.current_display = category+'.'+identifier;
 
-        this.element.find('.modal-title').text( Translator.trans('element.details', {}, 'kalamu') );
-        this.element.find('.modal-body').html("<i class='fa fa-refresh fa-spin'></i> "+Translator.trans('loading', {}, 'kalamu'));
+        this.element.find('.modal-title').text( Translator.trans('element.explorer.element.title', {}, 'kalamu') );
+        this.element.find('.modal-body').html("<i class='fa fa-refresh fa-spin'></i> "+Translator.trans('element.explorer.loading', {}, 'kalamu'));
         
         if(this.options.modalOptions){
             this.element.modal(this.options.modalOptions);
@@ -177,7 +177,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
      */
     _renderElementInfos: function(identifier, infos){
         category = this._findCategory(identifier);
-        backLink = $('<a href="#"><i class="fa fa-arrow-left"></i> '+Translator.trans('return.list', {}, 'kalamu')+'</a>');
+        backLink = $('<a href="#"><i class="fa fa-arrow-left"></i> '+Translator.trans('element.explorer.list.link', {}, 'kalamu')+'</a>');
         backLink.on('click', $.proxy(function(e){
             e.preventDefault();
             $.proxy(this.showElements(), this);
@@ -185,7 +185,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
 
         this.element.find('.modal-body').html('').append(backLink);
 
-        this.element.find('.modal-body').append('<span class="text-muted pull-right">'+Translator.trans('category', {}, 'kalamu')+' : <strong>'+Translator.trans('category.'+category, {}, 'kalamu')+'</strong></span>\n\
+        this.element.find('.modal-body').append('<span class="text-muted pull-right">'+Translator.trans('element.explorer.category', {}, 'kalamu')+' : <strong>'+Translator.trans('category.'+category, {}, 'kalamu')+'</strong></span>\n\
             <h1>'+infos.title+'</h1>\n\
             <div class="container-fluid">\n\
             <div class="row"><div class="col-md-12 elementDescription">'+infos.description+'</div></div>\n\

@@ -9,13 +9,13 @@ $.widget( "kalamu.kalamuDashboardGenericRow", {
         this.element.addClass('row stick-bottom kalamu-dashboard-row kalamu-dashboard-generic-row');
         
         if(this.options.enable_row){
-            links = $('<strong><i class="fa fa-plus"></i> '+Translator.trans('add.line', {}, 'kalamu')+' </strong>');
+            links = $('<strong><i class="fa fa-plus"></i> '+Translator.trans('element.generic_row.new_line.title', {}, 'kalamu')+' </strong>');
             this.element.append(links);
             types = [1, 2, 3, 4];
             for(n =0; n<types.length; n++){
                 col = types[n];
 
-                link = $('<a href="#" data-nb-col="'+col+'"> '+Translator.transChoice('n_col', col, {col: col}, 'kalamu')+'</a>')
+                link = $('<a href="#" data-nb-col="'+col+'"> '+Translator.transChoice('element.generic_row.line.add_n_col', col, {col: col}, 'kalamu')+'</a>')
                         .css('margin-left', '1em')
                         .appendTo(links);
                 this._on( link, {'click': this._addRow} );
@@ -23,7 +23,7 @@ $.widget( "kalamu.kalamuDashboardGenericRow", {
         }
         
         if(this.options.enable_section){
-            linkSection = $('<a href="#"><strong><i class="fa fa-plus"></i> '+Translator.trans('add.section', {}, 'kalamu')+' </strong></a>');
+            linkSection = $('<a href="#"><strong><i class="fa fa-plus"></i> '+Translator.trans('element.generic_row.new_section.title', {}, 'kalamu')+' </strong></a>');
             this.element.append('<br />').append(linkSection);
             this._on( linkSection, {'click': this._addSection} );
         }

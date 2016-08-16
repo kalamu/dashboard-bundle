@@ -1,10 +1,27 @@
-list.categorie.element: Liste of available elements
-loading: Loading...
+element.parameters.invalid.error: Invalid parameters for this element
+element.add.button.label: Add
+element.edit.button.label: Update
+
+add.widget.link.title: Add a Widget
+
+element.explorer.list.category.title: Liste of available elements
+element.explorer.list.category.description: "Select the element that you want to add from the following list."
+element.explorer.loading: Loading...
+element.explorer.close: Close
+element.explorer.unknown.error: Unkown error
+
+element.explorer.element.title: Details of the element
+element.explorer.list.link: List of elements
+element.explorer.category: Category
+
+element.generic_row.new_line.title: "Add a row:"
+element.generic_row.line.add_n_col: '{1}1 Column|]1,Inf[ %col% Columns'
+element.generic_row.new_section.title: Add a section
+
+element.row.delete: Remove the row
+element.row.up: Move up
+element.row.down: Move down
+
+element.sections.edit.link: Edit the section
+
 unknown.error: Unkown error
-select.element.in.list: "Select the element that you want to add from the following list:"
-element.details: Element details
-element.add: Add
-element.edit: Update
-return.list: Return to list
-category: Category
-invalid.element.parameter: Invalid parameters for this element
