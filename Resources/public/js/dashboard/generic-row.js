@@ -6,7 +6,7 @@ $.widget( "kalamu.kalamuDashboardGenericRow", {
     },
 
     _create: function() {
-        this.element.addClass('row stick-bottom kalamu-dashboard-row kalamu-dashboard-generic-row');
+        this.element.addClass('row stick-bottom kalamu-dashboard-row kalamu-dashboard-generic-row visible-editing');
         
         if(this.options.enable_row){
             links = $('<strong><i class="fa fa-plus"></i> '+Translator.trans('element.generic_row.new_line.title', {}, 'kalamu')+' </strong>');

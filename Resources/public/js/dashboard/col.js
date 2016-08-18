@@ -26,7 +26,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
         link.on('click', $.proxy(this._openExplorer, this));
         
         if(this.options.resizable){
-            resizer = $('<div class="resizer-col"></div>');
+            resizer = $('<div class="resizer-col visible-editing"></div>');
             this.element.prepend(resizer);
             this.options.resizer = resizer;
             resizer.draggable({

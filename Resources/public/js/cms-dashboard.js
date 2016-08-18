@@ -5,11 +5,12 @@ $.widget( "kalamu.kalamuCmsDashboard", {
         explorerSection: null,
         enable_widget: false,
         enable_section: false,
-        genericRow: null
+        genericRow: null,
+        editing: false
     },
 
     _create: function() {
-        this.element.addClass('kalamu-dashboard editing');
+        this.element.addClass('kalamu-dashboard');
         
         if(this.options.explorerWidget){
             this.options.explorerWidget.kalamuElementExplorer('option', 'dashboard', this);
@@ -25,16 +26,23 @@ $.widget( "kalamu.kalamuCmsDashboard", {
             this._refresh();
         }, this));
         
+        this._refresh();
         if(typeof this.afterCreate === 'function'){
             this.afterCreate();
         }
     },
     
     _refresh: function(){
-        this.removeSortable();
-        this.addSortable();
-        
-        this.element.append( this.element.find('>.stick-bottom').detach() );
+        if(this.options.editing){
+            this.removeSortable();
+            this.addSortable();
+
+            this.element.append( this.element.find('>.stick-bottom').detach() );
+            this.element.addClass('editing');
+        }else{
+            this.removeSortable();
+            this.element.removeClass('editing');
+        }
     },
     
     // Ajoute la ligne générique
@@ -200,6 +208,14 @@ $.widget( "kalamu.kalamuCmsDashboard", {
 
         $(".kalamu-dashboard-col").enableSelection();
         $(".kalamu-dashboard-row").enableSelection();
+    },
+    
+    _setOption: function(key, value){
+        this._super( key, value );
+        
+        if(key === 'editing'){
+            this._refresh();
+        }
     }
 
 });
