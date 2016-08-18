@@ -1,4 +1,4 @@
-$.widget( "kalamu.kalamuCmsDashboard", {
+$.widget( "kalamu.kalamuDashboard", {
 
     options: {
         explorerWidget: null,

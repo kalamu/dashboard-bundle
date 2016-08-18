@@ -176,14 +176,14 @@ $(function(){
     });
 
     // Dashboard for element organisation
-    $('#MyDashboard').kalamuCmsDashboard({
+    $('#MyDashboard').kalamuDashboard({
         explorerWidget: explorerWidget,
         enable_widget: true
     });
 
     $('#saveMyDashboard').click(function(e){
         e.preventDefault();
-        datas = $('#MyDashboard').kalamuCmsDashboard('export');
+        datas = $('#MyDashboard').kalamuDashboard('export');
         // Do whatever you want to save the datas.
         // They can be reinjected after with the 'import' method.
     });

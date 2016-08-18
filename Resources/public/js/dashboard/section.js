@@ -19,13 +19,13 @@ $.widget( "kalamu.kalamuDashboardSection", {
         
         this.options.innerDashboard = $('<div>');
         this.element.append(this.options.innerDashboard);
-        this.options.innerDashboard.kalamuCmsDashboard({
+        this.options.innerDashboard.kalamuDashboard({
             explorerWidget: this.options.dashboard.options.explorerWidget,
             enable_widget: true,
             enable_section: false
         });
         if(this.options._content){
-            this.options.innerDashboard.kalamuCmsDashboard('import', this.options._content);
+            this.options.innerDashboard.kalamuDashboard('import', this.options._content);
         }
         
         this._updateTitle();
@@ -67,7 +67,7 @@ $.widget( "kalamu.kalamuDashboardSection", {
             identifier: this.options.identifier,
             params: this.options.params,
         };
-        json._content = this.options.innerDashboard.kalamuCmsDashboard('export');
+        json._content = this.options.innerDashboard.kalamuDashboard('export');
         
         return json;
     },
