@@ -1,6 +1,6 @@
 {
     "name": "kalamu/dashboard-bundle",
-    "type": "library",
+    "type": "symfony-bundle",
     "description": "Configurable Bootstrap dashboard for Kalamu",
     "license": "MIT",
     "authors": [
