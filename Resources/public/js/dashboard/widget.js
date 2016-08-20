@@ -62,7 +62,7 @@ $.widget( "kalamu.kalamuDashboardWidget", {
     _delete: function(e){
         e.preventDefault();
         
-        dashboard = $(this.options.explorer.kalamuElementExplorer('option', 'dashboard'));
+        dashboard = this.options.explorer.kalamuElementExplorer('option', 'dashboard').element;
         this.element.remove();
         dashboard.trigger('kalamu.dashboard.widget_added');
     }

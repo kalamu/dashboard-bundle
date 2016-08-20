@@ -177,11 +177,12 @@ $.widget( "kalamu.kalamuDashboard", {
             items: '.kalamu-dashboard-widget',
             placeholder: "ui-state-highlight col-md-12",
             opacity: 0.5,
-            stop: function(e, ui){
+            stop: $.proxy(function(e, ui){
                 col = ui.item.parents('.kalamu-dashboard-col');
                 col.append( col.find('>.stick-bottom').detach() );
                 ui.item.kalamuDashboardWidget('refresh');
-            },
+                this.element.trigger('kalamu.dashboard.move_widget');
+            }, this),
             sort: function(event, ui) {
                 window_position = $(window).scrollTop();
                 window_height = $(window).height();
