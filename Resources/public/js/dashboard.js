@@ -37,7 +37,10 @@ $.widget( "kalamu.kalamuDashboard", {
             this.removeSortable();
             this.addSortable();
 
-            this.element.append( this.element.find('>.stick-bottom').detach() );
+            this.element.find('.stick-bottom').each(function(){
+                parent = $(this).parent();
+                parent.append( $(this).detach() );
+            });
             this.element.addClass('editing');
         }else{
             this.removeSortable();
