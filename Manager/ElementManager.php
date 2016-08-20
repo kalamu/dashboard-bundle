@@ -31,13 +31,11 @@ class ElementManager
      * Register a new element type
      * @param string $context 
      * @param string $type 
-     * @param string $persistence service name for persistence layer
      */
-    protected function addElementType($context, $type, $persistence){
+    protected function addElementType($context, $type){
         if(!isset($this->elements[$context])){
             $this->elements[$context] = ['types' => []];
         }
-        $this->elements[$context]['persistence'] = $persistence;
         
         if(!isset($this->elements[$context]['types'][$type])){
             $this->elements[$context]['types'][$type] = [];
@@ -59,15 +57,6 @@ class ElementManager
         $this->elements[$context]['types'][$type][$category] = $service_name;
     }
     
-    /**
-     * Get the persistence service for the context
-     * @return \Kalamu\DashboardBundle\ElementPersistenceInterface
-     */
-    public function getPersistence($context){
-        
-        return $this->container->get($this->getContext($context)['persistence']);
-    }
-
     /**
      * Get the list of categories for the given type
      * @return array
