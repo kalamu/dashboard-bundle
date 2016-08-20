@@ -107,9 +107,9 @@ $.widget( "kalamu.kalamuDashboard", {
     export: function(){
         var json = { childs: [] };
         
-        childs = this.element.children(':not(.kalamu-dashboard-generic-row)');
+        var childs = this.element.children(':not(.kalamu-dashboard-generic-row)');
         for(var x=0; x<childs.length; x++){
-            infos = {};
+            var infos = {};
             if(childs.eq(x).hasClass('kalamu-dashboard-row')){
                 infos = {type: 'row', datas: childs.eq(x).kalamuDashboardRow('export') };
             } else if (childs.eq(x).hasClass('kalamu-dashboard-section')){
