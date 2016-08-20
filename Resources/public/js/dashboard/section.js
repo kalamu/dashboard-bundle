@@ -13,8 +13,19 @@ $.widget( "kalamu.kalamuDashboardSection", {
 
         this.element.addClass('row kalamu-dashboard-section');
         
+        delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('element.section.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
+        linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
+        linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
+
+        config_row = $('<div class="col-md-12 visible-editing visible-editing-section text-right">').append(linkUp).append(linkDown).append(delete_link);
+        this.element.append(config_row);
+        
+        this._on( delete_link, { click: this._delete });
+        this._on( linkUp, { click: this.up });
+        this._on( linkDown, { click: this.down });
+        
         this.options.editLink = $('<a href="#" title="'+Translator.trans('element.sections.edit.link', {}, 'kalamu')+'"><strong class="text-muted section-name"></strong></a>');
-        this.element.prepend( $('<div class="section-config mb10"></div>').append(this.options.editLink) )
+        this.element.append( $('<div class="section-config"></div>').append(this.options.editLink) )
         this._on(this.options.editLink, { 'click': this.editElement });
         
         this.options.innerDashboard = $('<div>');

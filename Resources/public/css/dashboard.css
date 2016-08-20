@@ -131,11 +131,30 @@
 .kalamu-dashboard-section{
     background: #ccc;
     margin: 15px -15px;
-    padding: 15px;
+    padding: 0 15px 15px 30px;
     position: relative;
 }
 
-.kalamu-dashboard-section .visible-editing-row{
-    left: 15px;
+.section-config{
+    margin: 10px 0;
 }
 
+.kalamu-dashboard-section .visible-editing-row{
+    left: 30px;
+}
+
+.visible-editing-section{
+    position: absolute;
+    left: 0;
+    text-align: left !important;
+    padding: 0;
+    width: 25px;
+}
+
+.visible-editing-section>a{
+    display: block;
+}
+
+.visible-editing-section .link-label{
+    display: none;
+}
