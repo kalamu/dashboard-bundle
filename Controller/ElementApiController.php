@@ -27,7 +27,11 @@ class ElementApiController extends Controller
 
         $categories = array();
         foreach($manager->getCategories($context, $type) as $category){
-            $categories[$category] = $manager->getElementsInCategory($context, $type, $category);
+            $categories[$category] = [];
+            foreach($manager->getElementsInCategory($context, $type, $category) as $element){
+                $elementService = $manager->getElement($context, $type, $element);
+                $categories[$category][$element] = $elementService->getTitle();
+            }
         }
 
         $datas = $this->renderView('KalamuDashboardBundle:Element:categories.json.twig',
@@ -49,8 +53,8 @@ class ElementApiController extends Controller
 
         $infos = array(
             'identifier'    => $name,
-            'title'         => $element->getTitle(),
-            'description'   => $element->getDescription(),
+            'title'         => $this->get('translator')->trans($element->getTitle(), array(), 'kalamu'),
+            'description'   => $this->get('translator')->trans($element->getDescription(), array(), 'kalamu'),
             'context'       => $context,
             'type'          => $type
         );

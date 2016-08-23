@@ -2,8 +2,8 @@
 {
 {%- for category, elements in categories -%}
     "{{category}}": {
-        {% for element in elements %}
-            "{{element}}": "{{element|trans}}"{{loop.last ? "" : ","}}
+        {% for name, label in elements %}
+            "{{name}}": "{{label|trans}}"{{loop.last ? "" : ","}}
         {% endfor %}
     }{{loop.last ? "" : ","}}
 {%- endfor -%}
