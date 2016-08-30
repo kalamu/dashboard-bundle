@@ -12,22 +12,20 @@ $.widget( "kalamu.kalamuDashboardSection", {
     _create: function() {
 
         this.element.addClass('row kalamu-dashboard-section');
-        
+
         delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('element.section.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
+        edit_link = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.sections.edit.link', {}, 'kalamu')+'"><i class="fa fa-edit"></i></a>');
         linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
         linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
 
-        config_row = $('<div class="col-md-12 visible-editing visible-editing-section text-right">').append(linkUp).append(linkDown).append(delete_link);
+        config_row = $('<div class="col-md-12 visible-editing visible-editing-section text-right">').append(linkUp).append(linkDown).append(edit_link).append(delete_link);
         this.element.append(config_row);
-        
+
         this._on( delete_link, { click: this._delete });
+        this._on( edit_link, { click: this.editElement });
         this._on( linkUp, { click: this.up });
         this._on( linkDown, { click: this.down });
-        
-        this.options.editLink = $('<a href="#" title="'+Translator.trans('element.sections.edit.link', {}, 'kalamu')+'"><strong class="text-muted section-name"></strong></a>');
-        this.element.append( $('<div class="section-config"></div>').append(this.options.editLink) )
-        this._on(this.options.editLink, { 'click': this.editElement });
-        
+
         this.options.innerDashboard = $('<div>');
         this.element.append(this.options.innerDashboard);
         this.options.innerDashboard.kalamuDashboard({
@@ -38,11 +36,11 @@ $.widget( "kalamu.kalamuDashboardSection", {
         if(this.options._content){
             this.options.innerDashboard.kalamuDashboard('import', this.options._content);
         }
-        
+
         this._updateTitle();
-        
+
     },
-    
+
     /**
      * Update the title of the Section
      * @returns {undefined}
@@ -53,7 +51,7 @@ $.widget( "kalamu.kalamuDashboardSection", {
             this.options.editLink.find('.section-name').text(this.options.title);
         }, this));
     },
-    
+
     editElement: function(e){
         e.preventDefault();
         this.options.dashboard.options.explorerSection.kalamuElementExplorer('showElementInfos', this.options.identifier, this.options.params);
@@ -64,14 +62,14 @@ $.widget( "kalamu.kalamuDashboardSection", {
             this.options.dashboard.options.explorerSection.off('kalamu.dashboard.valid_element', updateElementFct);
         }, this, updateElementFct));
     },
-    
+
     updateElement: function(e, infos){
         this.options.identifier = infos.identifier;
         this.options.params = infos.params;
-        
+
         this._updateTitle();
     },
-    
+
     export: function(){
         var json = {
             type: this.options.type,
@@ -79,7 +77,7 @@ $.widget( "kalamu.kalamuDashboardSection", {
             params: this.options.params,
         };
         json._content = this.options.innerDashboard.kalamuDashboard('export');
-        
+
         return json;
     },
 
