@@ -1,5 +1,8 @@
 
 /** DASHBOARD **/
+.kalamu-dashboard{
+    position: relative;
+}
 .kalamu-dashboard .visible-editing{
     display: none;
 }
@@ -41,7 +44,7 @@
     display: block;
 }
 
-.visible-editing-row .link-label, 
+.visible-editing-row .link-label,
 .kalamu-dashboard-col>.visible-editing .link-label,
 .kalamu-dashboard.editing .visible-editing  .link-label{
     display: none;
