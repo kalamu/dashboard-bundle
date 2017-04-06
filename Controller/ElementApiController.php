@@ -2,12 +2,15 @@
 
 namespace Kalamu\DashboardBundle\Controller;
 
-use Kalamu\DashboardBundle\Model\AbstractElement;
+use Kalamu\DashboardBundle\Manager\ElementManager;
 use Kalamu\DashboardBundle\Model\AbstractConfigurableElement;
+use Kalamu\DashboardBundle\Model\AbstractElement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Form\Extension\Core\Type\FormType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 
 /**
@@ -137,15 +140,15 @@ class ElementApiController extends Controller
     /**
      * Get the config form of an element
      *
-     * @param \Kalamu\DashboardBundle\Model\AbstractElement $element
+     * @param AbstractElement $element
      * @param string $intention
-     * @return \Symfony\Component\Form\Form
+     * @return Form
      */
     protected function getConfigForm(AbstractElement $element, $intention){
 
         if($element instanceof AbstractConfigurableElement){
 
-            $form = $element->getForm( $this->createForm('form', null, array( 'csrf_protection' => false)) );
+            $form = $element->getForm( $this->createForm(FormType::class, null, array( 'csrf_protection' => false)) );
             if(is_string($form)){
                 $form = $this->createForm($form, null, array('csrf_protection' => false));
             }
@@ -158,9 +161,9 @@ class ElementApiController extends Controller
         }
 
         if($intention == 'create'){
-            $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('element.add.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
+            $form->add('submit', SubmitType::class, array('label' => $this->get('translator')->trans('element.add.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
         }elseif($intention == 'edit'){
-            $form->add('submit', 'submit', array('label' => $this->get('translator')->trans('element.edit.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
+            $form->add('submit', SubmitType::class, array('label' => $this->get('translator')->trans('element.edit.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
         }
 
         return $form;
@@ -168,7 +171,7 @@ class ElementApiController extends Controller
 
     /**
      * Get the elements manager
-     * @return \Kalamu\DashboardBundle\Manager\ElementManager
+     * @return ElementManager
      */
     protected function getElementManager(){
         return $this->get('kalamu_dashboard.element_manager');
