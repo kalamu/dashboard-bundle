@@ -1,5 +1,9 @@
 
 <div class="element-form">
-    {{ form(form) }}
+    {{ form_start(form) }}
+    {{ form_rest(form) }}
+
+    <div><button type="submit" class="btn btn-success">{{'element.add.button.label'|trans([], 'kalamu')}}</button></div>
+    {{ form_end(form) }}
 </div>
 

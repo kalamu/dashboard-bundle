@@ -160,12 +160,6 @@ class ElementApiController extends Controller
             $form = $this->createForm('form', null, array('csrf_protection' => false));
         }
 
-        if($intention == 'create'){
-            $form->add('submit', SubmitType::class, array('label' => $this->get('translator')->trans('element.add.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
-        }elseif($intention == 'edit'){
-            $form->add('submit', SubmitType::class, array('label' => $this->get('translator')->trans('element.edit.button.label', array(), 'kalamu'), 'attr' => array('class' => 'btn btn-success')));
-        }
-
         return $form;
     }
 
