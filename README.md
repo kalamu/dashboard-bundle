@@ -132,7 +132,7 @@ class UserDueTasks extends AbstractConfigurableElement
     }
 
     public function render(TwigEngine $templating){
-        $number = $this->paramaters['number'];
+        $number = $this->parameters['number'];
 
         $tasks = $this->theMagicOne($number); // Here you call your magic method that get the last '$number' tasks of the current user
 

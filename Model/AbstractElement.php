@@ -14,7 +14,7 @@ abstract class AbstractElement
      * Element parameters
      * @var array
      */
-    protected $paramaters;
+    protected $parameters;
 
     /**
      * Return the name of the element
@@ -39,7 +39,7 @@ abstract class AbstractElement
      * @param array $parameters
      */
     public function setParameters($parameters){
-        $this->paramaters = $parameters;
+        $this->parameters = $parameters;
     }
 
 }
