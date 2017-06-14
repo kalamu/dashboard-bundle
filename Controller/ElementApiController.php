@@ -148,7 +148,8 @@ class ElementApiController extends Controller
 
         if($element instanceof AbstractConfigurableElement){
 
-            $form = $element->getForm( $this->createForm(FormType::class, null, array( 'csrf_protection' => false)) );
+            $baseForm = $this->createForm(FormType::class, null, array( 'csrf_protection' => false));
+            $form = $element->getForm( $baseForm ) ?: $baseForm;
             if(is_string($form)){
                 $form = $this->createForm($form, null, array('csrf_protection' => false));
             }
@@ -157,7 +158,7 @@ class ElementApiController extends Controller
             }
 
         }else{
-            $form = $this->createForm('form', null, array('csrf_protection' => false));
+            $form = $this->createForm(FormType::class, null, array('csrf_protection' => false));
         }
 
         return $form;
