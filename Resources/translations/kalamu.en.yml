@@ -33,6 +33,7 @@ responsive_config.mobile: Mobile
 responsive_config.visibility: Visibility
 responsive_config.size: Size
 responsive_config.class: HTML Class
+responsive_config.id: HTML Id
 responsive_config.cancel: Cancel
 responsive_config.save: Save
 

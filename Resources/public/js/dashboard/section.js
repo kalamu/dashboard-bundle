@@ -90,7 +90,10 @@ $.widget( "kalamu.kalamuDashboardSection", {
 
         var responsiveConfig = $('<div>');
         responsiveConfig.appendTo('body');
-        responsiveConfig.kalamuResponsiveConfig({datas: this.options.responsive});
+        responsiveConfig.kalamuResponsiveConfig({
+            datas: this.options.responsive,
+            editable: ['visible', 'class', 'id']
+        });
         responsiveConfig.kalamuResponsiveConfig('open');
 
         responsiveConfig.one('kalamu.responsive_config.change', $.proxy(function(e, datas){
