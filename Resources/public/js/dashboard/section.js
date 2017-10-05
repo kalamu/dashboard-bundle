@@ -46,7 +46,8 @@ $.widget( "kalamu.kalamuDashboardSection", {
         this.options.innerDashboard.kalamuDashboard({
             explorerWidget: this.options.dashboard.options.explorerWidget,
             enable_widget: true,
-            enable_section: false
+            enable_section: false,
+            enable_responsive_config: this.options.enable_responsive_config
         });
         if(this.options._content){
             this.options.innerDashboard.kalamuDashboard('import', this.options._content);
