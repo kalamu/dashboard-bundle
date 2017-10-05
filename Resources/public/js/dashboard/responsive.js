@@ -4,6 +4,15 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
     },
 
     _create: function() {
+
+        if(this.options.datas == null){
+            this.options.datas = {
+                visible: ['md', 'sm', 'xs'],
+                size: {'md':12, 'sm':12, 'xs':12},
+                class: ''
+            };
+        }
+
         this.element.addClass('kalamu-responsive-config modal fade');
         this.element.append('<div class="modal-dialog"><div class="modal-content">\n\
                             <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="'+Translator.trans('responsive_config.close', {}, 'kalamu')+'">\n\
