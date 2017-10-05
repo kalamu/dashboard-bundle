@@ -27,9 +27,10 @@ element.sections.edit.link: Modifier la section
 element.sections.config.link: Configurer le responsive
 
 responsive_config.title: Configuration du responsive
-responsive_config.desktop: Ordinateur
-responsive_config.tablet: Tablette
-responsive_config.mobile: Mobile
+responsive_config.large: Large
+responsive_config.medium: Moyen
+responsive_config.small: Petit
+responsive_config.extra-small: Très petit
 responsive_config.visibility: Visibilité
 responsive_config.size: Taille
 responsive_config.class: HTML Class

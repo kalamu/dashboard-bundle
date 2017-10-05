@@ -6,8 +6,8 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
 
     _create: function() {
         this.options.datas = $.extend({
-                visible: ['md', 'sm', 'xs'],
-                size: {'md':12, 'sm':12, 'xs':12},
+                visible: ['lg', 'md', 'sm', 'xs'],
+                size: {'lg':12, 'md':12, 'sm':12, 'xs':12},
                 class: '',
                 id: ''
             }, this.options.datas);
@@ -37,9 +37,10 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
                 <thead>\n\
                     <tr>\n\
                         <th></th>\n\
-                        <th><i class="fa fa-desktop"></i> '+Translator.trans('responsive_config.desktop', {}, 'kalamu')+'</th>\n\
-                        <th><i class="fa fa-tablet"></i> '+Translator.trans('responsive_config.tablet', {}, 'kalamu')+'</th>\n\
-                        <th><i class="fa fa-mobile"></i> '+Translator.trans('responsive_config.mobile', {}, 'kalamu')+'</th>\n\
+                        <th><i class="fa fa-desktop"></i> '+Translator.trans('responsive_config.large', {}, 'kalamu')+'</th>\n\
+                        <th><i class="fa fa-tablet"></i> '+Translator.trans('responsive_config.medium', {}, 'kalamu')+'</th>\n\
+                        <th><i class="fa fa-mobile fa-rotate-90"></i> '+Translator.trans('responsive_config.small', {}, 'kalamu')+'</th>\n\
+                        <th><i class="fa fa-mobile"></i> '+Translator.trans('responsive_config.extra-small', {}, 'kalamu')+'</th>\n\
                     </tr>\n\
                 </thead>\n\
             ');
@@ -51,6 +52,7 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
             table.find('tbody').append('\
                 <tr>\n\
                     <th>'+Translator.trans('responsive_config.visibility', {}, 'kalamu')+'</th>\n\
+                    <th><label class="btn btn-primary active"><input type="checkbox" name="visible" value="lg" autocomplete="off" checked></label></th>\n\
                     <th><label class="btn btn-primary active"><input type="checkbox" name="visible" value="md" autocomplete="off" checked></label></th>\n\
                     <th><label class="btn btn-primary active"><input type="checkbox" name="visible" value="sm" autocomplete="off" checked></label></th>\n\
                     <th><label class="btn btn-primary active"><input type="checkbox" name="visible" value="xs" autocomplete="off" checked></label></th>\n\
@@ -61,6 +63,7 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
             table.find('tbody').append('\
                 <tr>\n\
                     <th>'+Translator.trans('responsive_config.size', {}, 'kalamu')+'</th>\n\
+                    <th><input type="number" name="size-lg" value="12" min="1" max="12" class="form-control text-center"></th>\n\
                     <th><input type="number" name="size-md" value="12" min="1" max="12" class="form-control text-center"></th>\n\
                     <th><input type="number" name="size-sm" value="12" min="1" max="12" class="form-control text-center"></th>\n\
                     <th><input type="number" name="size-xs" value="12" min="1" max="12" class="form-control text-center"></th>\n\
@@ -71,7 +74,7 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
             table.find('tbody').append('\
                 <tr>\n\
                     <th>'+Translator.trans('responsive_config.class', {}, 'kalamu')+'</th>\n\
-                    <th colspan="3"><input type="text" name="class" class="form-control"></th>\n\
+                    <th colspan="4"><input type="text" name="class" class="form-control"></th>\n\
                 </tr>');
         }
 
@@ -79,7 +82,7 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
             table.find('tbody').append('\
                 <tr>\n\
                     <th>'+Translator.trans('responsive_config.id', {}, 'kalamu')+'</th>\n\
-                    <th colspan="3"><input type="text" name="id" class="form-control"></th>\n\
+                    <th colspan="4"><input type="text" name="id" class="form-control"></th>\n\
                 </tr>');
         }
 
