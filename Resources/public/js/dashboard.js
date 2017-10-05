@@ -5,33 +5,34 @@ $.widget( "kalamu.kalamuDashboard", {
         explorerSection: null,
         enable_widget: false,
         enable_section: false,
+        enable_responsive_config: false,
         genericRow: null,
         editing: false
     },
 
     _create: function() {
         this.element.addClass('kalamu-dashboard');
-        
+
         if(this.options.explorerWidget){
             this.options.explorerWidget.kalamuElementExplorer('option', 'dashboard', this);
         }
         if(this.options.explorerSection){
             this.options.explorerSection.kalamuElementExplorer('option', 'dashboard', this);
         }
-        
+
         this._addGenericRow();
 
         this.addSortable();
         this.element.on('kalamu.dashboard.row_added kalamu.dashboard.section_added kalamu.dashboard.widget_added', $.proxy(function(){
             this._refresh();
         }, this));
-        
+
         this._refresh();
         if(typeof this.afterCreate === 'function'){
             this.afterCreate();
         }
     },
-    
+
     _refresh: function(){
         if(this.options.editing){
             this.removeSortable();
@@ -47,21 +48,21 @@ $.widget( "kalamu.kalamuDashboard", {
             this.element.removeClass('editing');
         }
     },
-    
+
     // Ajoute la ligne générique
     _addGenericRow: function(){
         if(this.options.genericRow){
             this.options.genericRow.show();
             return;
         }
-        
+
         this.options.genericRow = $('<div>');
         this.element.append( this.options.genericRow );
         this.options.genericRow.kalamuDashboardGenericRow({
             enable_row: this.options.enable_widget ? true : false,
             enable_section: this.options.enable_section ? true : false,
         });
-        
+
         if(this.options.enable_widget){
             this.options.genericRow.on('kalamu.dashboard.add_row', $.proxy(function(e, nb_col){
                 e.preventDefault();
@@ -71,11 +72,11 @@ $.widget( "kalamu.kalamuDashboard", {
                 this.element.trigger('kalamu.dashboard.row_added');
             }, this));
         }
-        
+
         if(this.options.enable_section){
             this.options.genericRow.on('kalamu.dashboard.add_section', $.proxy(function(e){
                 e.preventDefault();
-                
+
                 this.options.explorerSection.kalamuElementExplorer('showElements');
 
                 addSectionFct = $.proxy(this._addSection, this);
@@ -86,7 +87,7 @@ $.widget( "kalamu.kalamuDashboard", {
             }, this));
         }
     },
-    
+
     _addSection: function(e, infos){
         section = $('<section>');
         this.element.find('>.stick-bottom').before(section);
@@ -96,7 +97,7 @@ $.widget( "kalamu.kalamuDashboard", {
             identifier: infos.identifier,
             params: infos.params
         });
-        
+
         this.element.trigger('kalamu.dashboard.section_added');
     },
 
@@ -106,7 +107,7 @@ $.widget( "kalamu.kalamuDashboard", {
      */
     export: function(){
         var json = { childs: [] };
-        
+
         var childs = this.element.children(':not(.kalamu-dashboard-generic-row)');
         for(var x=0; x<childs.length; x++){
             var infos = {};
@@ -115,22 +116,22 @@ $.widget( "kalamu.kalamuDashboard", {
             } else if (childs.eq(x).hasClass('kalamu-dashboard-section')){
                 infos = {type: 'section', datas: childs.eq(x).kalamuDashboardSection('export') };
             }
-            
+
             json.childs.push( infos );
         }
 
         return json;
     },
-    
+
     /**
      * Import dashboard content from JSON
      * @param {type} datas
      * @returns {undefined}
      */
     import: function(datas){
-        
+
         this.element.children(':not(.kalamu-dashboard-generic-row)').remove();
-        
+
         $.each(datas.childs, $.proxy(function(i, child){
             if(child.type === 'row'){
                 row = $('<div>');
@@ -142,7 +143,7 @@ $.widget( "kalamu.kalamuDashboard", {
                 section.kalamuDashboardSection( $.extend(child.datas, {dashboard: this}) );
             }
         }, this));
-        
+
         this._refresh();
     },
 
@@ -213,10 +214,10 @@ $.widget( "kalamu.kalamuDashboard", {
         $(".kalamu-dashboard-col").enableSelection();
         $(".kalamu-dashboard-row").enableSelection();
     },
-    
+
     _setOption: function(key, value){
         this._super( key, value );
-        
+
         if(key === 'editing'){
             this._refresh();
         }

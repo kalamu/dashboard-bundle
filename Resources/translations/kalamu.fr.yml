@@ -24,5 +24,16 @@ element.row.down: Descendre la ligne
 element.row.add_coll: Ajouter une colonne
 
 element.sections.edit.link: Modifier la section
+element.sections.config.link: Configurer le responsive
+
+responsive_config.title: Configuration du responsive
+responsive_config.desktop: Ordinateur
+responsive_config.tablet: Tablette
+responsive_config.mobile: Mobile
+responsive_config.visibility: Visibilité
+responsive_config.size: Taille
+responsive_config.class: HTML Class
+responsive_config.cancel: Annuler
+responsive_config.save: Enregistrer
 
 unknown.error: Une erreur inattendue est survenue.
