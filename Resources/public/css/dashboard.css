@@ -161,3 +161,13 @@
 .visible-editing-section .link-label{
     display: none;
 }
+
+.kalamu-dashboard.editing a.visible-editing{
+    display: inline-block;
+}
+.kalamu-dashboard-row .btn-add-row {
+    float: right;
+    position: relative;
+    left: 27px;
+    top: 25px;
+}

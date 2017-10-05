@@ -10,7 +10,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
     _create: function() {
         this.element.addClass('col-md-'+this.options.md);
         this.element.addClass('kalamu-dashboard-col');
-        
+
         this.options.explorer = this.options.dashboard.options.explorerWidget;
 
         if(this.options.widgets){
@@ -24,42 +24,75 @@ $.widget( "kalamu.kalamuDashboardCol", {
 
         link = $('<a href="#" title="'+Translator.trans('add.widget.link.title', {}, 'kalamu')+'"><strong><i class="fa fa-plus"></i></strong></a>');
         link.on('click', $.proxy(this._openExplorer, this));
-        
+
         if(this.options.resizable){
-            resizer = $('<div class="resizer-col visible-editing"></div>');
-            this.element.prepend(resizer);
-            this.options.resizer = resizer;
-            resizer.draggable({
-                axis: "x", 
-                start: $.proxy(this.startResize, this),
-                stop: $.proxy(this.stopResize, this),
-                drag: $.proxy(this.dragResize, this),
-            });
+            this.enableResize();
+        }else{
+            this.disableResize();
         }
 
         this.element.append( $('<div class="col-md-12 stick-bottom visible-editing">').append(link) );
     },
 
+    refresh: function(){
+        if(this.options.resizable){
+            this.enableResize();
+        }else{
+            this.disableResize();
+        }
+    },
+
+    enableResize: function(){
+        if(!this.options.resizer){
+            this.options.resizer = $('<div class="resizer-col visible-editing"></div>');
+            this.element.prepend(this.options.resizer);
+            this.options.resizer.draggable({
+                axis: "x",
+                start: $.proxy(this.startResize, this),
+                stop: $.proxy(this.stopResize, this),
+                drag: $.proxy(this.dragResize, this),
+            });
+        }
+    },
+
+    disableResize: function(){
+        if(this.options.resizer){
+            this.options.resizer.remove();
+            this.options.resizer = false;
+        }
+    },
+
     startResize: function(e, ui){
-        this.options.md_size = parseInt(this.element.width()) / this.options.md;
+        this.options.md_size = parseInt(this.element.parent().width() / 12);
         this.options.resizer.draggable("option", 'grid', [this.options.md_size, this.options.md_size]);
-        this.options.max_left = this.options.md + this.element.next('.kalamu-dashboard-col').kalamuDashboardCol('option', 'md')-1;
+        if(this.element.next('.kalamu-dashboard-col').length){
+            this.options.max_left = this.options.md + this.element.next('.kalamu-dashboard-col').kalamuDashboardCol('option', 'md')-1;
+        }else{
+            this.options.max_left = 12;
+            this.element.prevAll('.kalamu-dashboard-col').each($.proxy(function(i, obj){
+                this.options.max_left -= $(obj).kalamuDashboardCol('option', 'md');
+            }, this));
+        }
     },
 
     stopResize: function(e, ui){
-        for(x=1; x<11; x++){
-            if(ui.position.left - (x*this.options.md_size) < (this.options.md_size/2)){
+        for(var x=1; x<=11; x++){
+            if(Math.abs(ui.position.left - (x*this.options.md_size)) <= (this.options.md_size/2)){
                 diff = this.options.md - x;
                 this.element.removeClass('col-md-'+this.options.md);
                 this.options.md = x;
                 this.element.addClass('col-md-'+this.options.md);
                 this.options.resizer.css('left', 'auto');
-                this.element.next().kalamuDashboardCol('option', 'md', this.element.next().kalamuDashboardCol('option', 'md')+diff );
+                if(this.element.next('.kalamu-dashboard-col').length){
+                    this.element.next('.kalamu-dashboard-col').kalamuDashboardCol('option', 'md', this.element.next().kalamuDashboardCol('option', 'md')+diff );
+                }else if(x === this.options.max_left){
+                    this.disableResize();
+                }
                 break;
             }
         }
     },
-    
+
     dragResize: function(e, ui){
         ui.position.left = Math.max( this.options.md_size, ui.position.left );
         ui.position.left = Math.min( this.options.md_size*this.options.max_left, ui.position.left );
@@ -109,7 +142,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
             identifier: infos.identifier,
             params: infos.params
         });
-        
+
         this.options.explorer.kalamuElementExplorer('option', 'dashboard').element.trigger('kalamu.dashboard.widget_added');
     },
 
@@ -120,12 +153,14 @@ $.widget( "kalamu.kalamuDashboardCol", {
             .kalamuDashboardWidget('option', 'params', infos.params)
             .kalamuDashboardWidget('refresh');
     },
-    
+
     _setOption: function( key, value ) {
         if (key == 'md') {
               this.element.removeClass('col-md-'+this.options.md);
               this.element.addClass('col-md-'+value);
         }
+
         this._super( key, value );
+        this.refresh();
     }
 });
