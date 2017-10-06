@@ -23,6 +23,8 @@ element.row.up: Move up
 element.row.down: Move down
 element.row.add_coll: Add a column
 
+element.col.config: Responsive configuration
+
 element.sections.edit.link: Edit the section
 element.sections.config.link: Responsive configuration
 

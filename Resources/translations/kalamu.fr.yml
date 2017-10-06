@@ -23,6 +23,8 @@ element.row.up: Monter la ligne
 element.row.down: Descendre la ligne
 element.row.add_coll: Ajouter une colonne
 
+element.col.config: Configurer le responsive
+
 element.sections.edit.link: Modifier la section
 element.sections.config.link: Configurer le responsive
 

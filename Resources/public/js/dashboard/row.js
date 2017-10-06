@@ -15,9 +15,6 @@ $.widget( "kalamu.kalamuDashboardRow", {
         }
         this.element.addClass('row kalamu-dashboard-row');
         this.options.enable_responsive_config = this.options.dashboard.options.enable_responsive_config;
-        if(!this.options.enable_responsive_config){
-            console.log(this);
-        }
 
         delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('element.row.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
         linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');

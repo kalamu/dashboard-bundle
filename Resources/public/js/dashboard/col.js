@@ -4,6 +4,8 @@ $.widget( "kalamu.kalamuDashboardCol", {
         editing: false,
         md: null,
         widgets: null,
+        enable_responsive_config: false,
+        responsive: null,
         dashboard: null,
         resizable: false
     },
@@ -12,6 +14,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
         this.element.addClass('kalamu-dashboard-col');
 
         this.options.explorer = this.options.dashboard.options.explorerWidget;
+        this.options.enable_responsive_config = this.options.dashboard.options.enable_responsive_config;
 
         if(this.options.widgets){
             $.each(this.options.widgets, $.proxy(function(i, config){
@@ -31,7 +34,16 @@ $.widget( "kalamu.kalamuDashboardCol", {
             this.disableResize();
         }
 
-        this.element.append( $('<div class="col-md-12 stick-bottom visible-editing">').append(link) );
+        config_btns = $('<div class="col-md-12 stick-bottom visible-editing">')
+                .append(link);
+
+        if(this.options.enable_responsive_config){
+            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.col.config', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
+            config_btns.append(responsiveConfig);
+            this._on( responsiveConfig, {click: this.configureResponsive } );
+        }
+
+        this.element.append( config_btns );
     },
 
     refresh: function(){
@@ -98,10 +110,28 @@ $.widget( "kalamu.kalamuDashboardCol", {
         ui.position.left = Math.min( this.options.md_size*this.options.max_left, ui.position.left );
     },
 
+    configureResponsive: function(e){
+        e.preventDefault();
+
+        var responsiveConfig = $('<div>');
+        responsiveConfig.appendTo('body');
+        responsiveConfig.kalamuResponsiveConfig({
+            datas: this.options.responsive,
+            editable: ['visible', 'size', 'class', 'id']
+        });
+        responsiveConfig.kalamuResponsiveConfig('open');
+
+        responsiveConfig.one('kalamu.responsive_config.change', $.proxy(function(e, datas){
+            this.options.responsive = datas;
+        }, this));
+        responsiveConfig.one('kalamu.responsive_config.closed', function(e){ $(e.target).remove(); });
+    },
+
     export: function(){
         var json = {
             md: this.options.md,
-            widgets: []
+            widgets: [],
+            responsive: this.options.responsive
         };
         list_widget = this.element.find('.kalamu-dashboard-widget');
         for(var x=0; x<list_widget.length; x++){

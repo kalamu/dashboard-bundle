@@ -136,6 +136,7 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
                     datas.visible = $.makeArray( this.element.find('input[name="visible"]:checked').map(function(){ return $(this).val(); }) );
                     break;
                 case 'size':
+                    datas.size = {};
                     this.element.find('input[name^="size-"]').map(function(){
                         datas.size[$(this).attr('name').substr(5)] = $(this).val();
                     });
