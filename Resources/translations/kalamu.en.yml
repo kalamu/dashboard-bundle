@@ -21,6 +21,7 @@ element.generic_row.new_section.title: Add a section
 element.row.delete: Remove the row
 element.row.up: Move up
 element.row.down: Move down
+element.row.add_coll: Add a column
 
 element.sections.edit.link: Edit the section
 
