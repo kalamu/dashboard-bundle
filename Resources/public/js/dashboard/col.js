@@ -17,16 +17,19 @@ $.widget( "kalamu.kalamuDashboardCol", {
         this.options.explorer = this.options.dashboard.options.explorerWidget;
         this.options.enable_responsive_config = this.options.dashboard.options.enable_responsive_config;
 
+        this.element.append('<div class="col-config col-md-12 text-right bg-primary visible-editing"></div>');
+        this.element.append('<div class="col-widgets col-md-12"></div>');
         if(this.options.widgets){
             $.each(this.options.widgets, $.proxy(function(i, config){
                 widget = $('<div>');
-                this.element.append(widget);
+                this.element.find('.col-widgets').append(widget);
                 config.explorer = this.options.explorer;
                 widget.kalamuDashboardWidget(config);
             }, this));
         }
 
-        link = $('<a href="#" title="'+Translator.trans('add.widget.link.title', {}, 'kalamu')+'"><strong><i class="fa fa-plus"></i></strong></a>');
+        link = $('<a href="#" class="btn btn-xs btn-success" title="'+Translator.trans('add.widget.link.title', {}, 'kalamu')+'"><strong><i class="fa fa-plus"></i></strong></a>');
+        this.element.append( $('<div class="col-md-12 visible-editing text-center"></div>').append(link) );
         link.on('click', $.proxy(this._openExplorer, this));
 
         if(this.options.resizable){
@@ -35,17 +38,12 @@ $.widget( "kalamu.kalamuDashboardCol", {
             this.disableResize();
         }
 
-        config_btns = $('<div class="col-md-12 stick-bottom visible-editing">')
-                .append(link);
-
         if(this.options.enable_responsive_config){
-            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.col.config', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
-            config_btns.append(responsiveConfig);
+            responsiveConfig = $('<a href="#" class="btn btn-info btn-xs" title="'+Translator.trans('element.col.config', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
+            this.element.find('.col-config').append( responsiveConfig );
             this._on( responsiveConfig, {click: this.configureResponsive } );
             this.configureResponsive();
         }
-
-        this.element.append( config_btns );
     },
 
     refresh: function(){
@@ -117,13 +115,18 @@ $.widget( "kalamu.kalamuDashboardCol", {
         if(e){
             e.preventDefault();
         }else{
-            this.options.responsive = $('<div>').kalamuResponsiveConfig({
-                    datas: this.options.responsive,
-                    editable: ['visible', 'size', 'class', 'id']
-                }).kalamuResponsiveConfig('option', 'datas');
-            $.each(this.options.responsive.size, $.proxy(function(i, val){
-                this.options.responsive.size[i] = this.options.md;
-            }, this));
+            if(this.options.responsive === null){
+                this.options.viewport = this.options.dashboard.options.viewport;
+                this.options.responsive = $('<div>').kalamuResponsiveConfig({
+                        datas: this.options.responsive,
+                        editable: ['visible', 'size', 'class', 'id']
+                    }).kalamuResponsiveConfig('option', 'datas');
+                $.each(this.options.responsive.size, $.proxy(function(i, val){
+                    this.options.responsive.size[i] = this.options.md;
+                }, this));
+            }else{
+                this._setOption('md', this.options.responsive[this.options.viewport]);
+            }
             return;
         }
 
@@ -155,7 +158,6 @@ $.widget( "kalamu.kalamuDashboardCol", {
 
     export: function(){
         var json = {
-            md: this.options.md,
             widgets: [],
             responsive: this.options.responsive
         };
@@ -190,7 +192,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
 
     addWidget: function(e, infos){
         widget = $('<div>');
-        this.element.find('>.stick-bottom').before(widget);
+        this.element.find('.col-widgets').append(widget);
         widget.kalamuDashboardWidget({
             explorer: this.options.explorer,
             context: infos.context,

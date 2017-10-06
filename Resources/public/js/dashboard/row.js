@@ -16,16 +16,20 @@ $.widget( "kalamu.kalamuDashboardRow", {
         this.element.addClass('row kalamu-dashboard-row');
         this.options.enable_responsive_config = this.options.dashboard.options.enable_responsive_config;
 
-        delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('element.row.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
-        linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
-        linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
+        delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('element.row.delete', {}, 'kalamu')+'"><i class="fa fa-trash fa-fw"></i></a>');
+        linkUp = $('<a href="#" class="btn btn-info btn-xs" title="'+Translator.trans('element.row.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up fa-fw"></i></a>');
+        linkDown = $('<a href="#" class="btn btn-info btn-xs" title="'+Translator.trans('element.row.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down fa-fw"></i></a>');
         this.options.addCol = $('<a href="#" class="btn btn-success btn-xs visible-editing btn-add-row" title="'+Translator.trans('element.row.add_col', {}, 'kalamu')+'"><i class="fa fa-plus"></i></a>');
 
-        config_row = $('<div class="col-md-12 visible-editing visible-editing-row text-right">')
+        btnConfig = $('<div class="collapse"></div>').uniqueId()
                 .append(linkUp)
                 .append(linkDown)
                 .append(delete_link);
+        config_row = $('<div class="row-config visible-editing visible-editing-row bg-primary">')
+                .append('<a class="btn btn-xs btn-primary" role="button" data-toggle="collapse" href="#'+btnConfig.attr('id')+'" aria-expanded="false"><i class="fa fa-bars btn-fw"></i></a>')
+                .append( btnConfig );
         this.element.append(config_row);
+        this.element.append('<div class="row-cols"></div>');
         this.element.append(this.options.addCol);
 
         this._on( delete_link, { click: this._delete });
@@ -34,7 +38,7 @@ $.widget( "kalamu.kalamuDashboardRow", {
         this._on( this.options.addCol, { click: this.newColumn });
 
         if(this.options.enable_responsive_config){
-            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.config', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
+            responsiveConfig = $('<a href="#" class="btn btn-info btn-xs btn-fw" title="'+Translator.trans('element.row.config', {}, 'kalamu')+'"><i class="fa fa-gear fa-fw"></i></a>');
             linkDown.after(responsiveConfig);
             this._on( responsiveConfig, { click: this.configureResponsive });
             if(this.options.responsive === null){
@@ -95,10 +99,19 @@ $.widget( "kalamu.kalamuDashboardRow", {
         md = Math.floor(12/this.options.col);
 
         col = $('<div>');
-        this.element.append(col);
-        col.kalamuDashboardCol({resizable: (md*this.options.col < 12) , dashboard: this.options.dashboard});
+        this.element.find('>.row-cols').append(col);
+        col.kalamuDashboardCol({
+            resizable: (md*this.options.col < 12) ,
+            dashboard: this.options.dashboard,
+            viewport: this.options.viewport
+        });
 
-        for(x=0; x<this.options.col; x++){
+        for(var x=0; x<this.options.col; x++){
+            var responsive = this.element.find('.kalamu-dashboard-col').eq(x).kalamuDashboardCol('option', 'responsive');
+            for(var sz in responsive.size){
+                responsive.size[sz] = md;
+            }
+            this.element.find('.kalamu-dashboard-col').eq(x).kalamuDashboardCol('option', 'responsive', responsive);
             this.element.find('.kalamu-dashboard-col').eq(x).kalamuDashboardCol('option', 'md', md);
         }
         this.refresh();
@@ -134,7 +147,7 @@ $.widget( "kalamu.kalamuDashboardRow", {
             this.element.hide();
         }else{
             this.element.show();
-            this.element.find('>.kalamu-dashboard-col').each(function(){
+            this.element.find('>.row-cols .kalamu-dashboard-col').each(function(){
                 $(this).kalamuDashboardCol('showView', viewport);
             });
         }
@@ -145,7 +158,7 @@ $.widget( "kalamu.kalamuDashboardRow", {
         md = Math.abs(12/this.options.col);
         for(x=0; x<this.options.col; x++){
             col = $('<div>');
-            this.element.append(col);
+            this.element.find('>.row-cols').append(col);
             resizable = (x+1) < this.options.col ? true : false;
 
             options = this.options.cols[x]||{md: md};
