@@ -6,6 +6,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
         widgets: null,
         enable_responsive_config: false,
         responsive: null,
+        viewport: null,
         dashboard: null,
         resizable: false
     },
@@ -41,6 +42,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
             responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.col.config', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
             config_btns.append(responsiveConfig);
             this._on( responsiveConfig, {click: this.configureResponsive } );
+            this.configureResponsive();
         }
 
         this.element.append( config_btns );
@@ -93,6 +95,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
                 diff = this.options.md - x;
                 this.element.removeClass('col-md-'+this.options.md);
                 this.options.md = x;
+                this.options.responsive.size[this.options.viewport] = x;
                 this.element.addClass('col-md-'+this.options.md);
                 this.options.resizer.css('left', 'auto');
                 if(this.element.next('.kalamu-dashboard-col').length){
@@ -111,7 +114,18 @@ $.widget( "kalamu.kalamuDashboardCol", {
     },
 
     configureResponsive: function(e){
-        e.preventDefault();
+        if(e){
+            e.preventDefault();
+        }else{
+            this.options.responsive = $('<div>').kalamuResponsiveConfig({
+                    datas: this.options.responsive,
+                    editable: ['visible', 'size', 'class', 'id']
+                }).kalamuResponsiveConfig('option', 'datas');
+            $.each(this.options.responsive.size, $.proxy(function(i, val){
+                this.options.responsive.size[i] = this.options.md;
+            }, this));
+            return;
+        }
 
         var responsiveConfig = $('<div>');
         responsiveConfig.appendTo('body');
@@ -125,6 +139,18 @@ $.widget( "kalamu.kalamuDashboardCol", {
             this.options.responsive = datas;
         }, this));
         responsiveConfig.one('kalamu.responsive_config.closed', function(e){ $(e.target).remove(); });
+    },
+
+    showView: function(viewport){
+        this.options.viewport = viewport;
+        if(this.options.responsive.visible.indexOf(viewport) === -1){
+            this.element.hide();
+        }else{
+            this.element.show();
+            this.element.removeClass('col-md-'+this.options.md);
+            this.options.md = this.options.responsive.size[viewport];
+            this.element.addClass('col-md-'+this.options.md);
+        }
     },
 
     export: function(){
@@ -188,6 +214,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
         if (key == 'md') {
               this.element.removeClass('col-md-'+this.options.md);
               this.element.addClass('col-md-'+value);
+              this.options.responsive.size[this.options.viewport] = value;
         }
 
         this._super( key, value );

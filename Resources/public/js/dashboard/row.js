@@ -20,9 +20,6 @@ $.widget( "kalamu.kalamuDashboardRow", {
         linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
         linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
         this.options.addCol = $('<a href="#" class="btn btn-success btn-xs visible-editing btn-add-row" title="'+Translator.trans('element.row.add_col', {}, 'kalamu')+'"><i class="fa fa-plus"></i></a>');
-        if(this.options.enable_responsive_config){
-            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.config', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
-        }
 
         config_row = $('<div class="col-md-12 visible-editing visible-editing-row text-right">')
                 .append(linkUp)
@@ -37,8 +34,12 @@ $.widget( "kalamu.kalamuDashboardRow", {
         this._on( this.options.addCol, { click: this.newColumn });
 
         if(this.options.enable_responsive_config){
+            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.row.config', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
             linkDown.after(responsiveConfig);
             this._on( responsiveConfig, { click: this.configureResponsive });
+            if(this.options.responsive === null){
+                this.configureResponsive();
+            }
         }
 
         this._addCols();
@@ -104,7 +105,15 @@ $.widget( "kalamu.kalamuDashboardRow", {
     },
 
     configureResponsive: function(e){
-        e.preventDefault();
+        if(e){
+            e.preventDefault();
+        }else{
+            this.options.responsive = $('<div>').kalamuResponsiveConfig({
+                    datas: this.options.responsive,
+                    editable: ['visible', 'class', 'id']
+                }).kalamuResponsiveConfig('option', 'datas');
+            return;
+        }
 
         var responsiveConfig = $('<div>');
         responsiveConfig.appendTo('body');
@@ -118,6 +127,17 @@ $.widget( "kalamu.kalamuDashboardRow", {
             this.options.responsive = datas;
         }, this));
         responsiveConfig.one('kalamu.responsive_config.closed', function(e){ $(e.target).remove(); });
+    },
+
+    showView: function(viewport){
+        if(this.options.responsive.visible.indexOf(viewport) === -1){
+            this.element.hide();
+        }else{
+            this.element.show();
+            this.element.find('>.kalamu-dashboard-col').each(function(){
+                $(this).kalamuDashboardCol('showView', viewport);
+            });
+        }
     },
 
     // Ajoute les colonnes demandées

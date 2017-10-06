@@ -20,9 +20,6 @@ $.widget( "kalamu.kalamuDashboardSection", {
         edit_link = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.sections.edit.link', {}, 'kalamu')+'"><i class="fa fa-edit"></i></a>');
         linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
         linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
-        if(this.options.enable_responsive_config){
-            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.sections.config.link', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
-        }
 
         config_row = $('<div class="col-md-12 visible-editing visible-editing-section text-right">')
                 .append(linkUp)
@@ -37,8 +34,12 @@ $.widget( "kalamu.kalamuDashboardSection", {
         this._on( linkDown, { click: this.down });
 
         if(this.options.enable_responsive_config){
+            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.sections.config.link', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
             edit_link.after(responsiveConfig);
             this._on( responsiveConfig, { click: this.configureResponsive });
+            if(this.options.responsive === null){
+                this.configureResponsive();
+            }
         }
 
         this.options.innerDashboard = $('<div>');
@@ -47,7 +48,9 @@ $.widget( "kalamu.kalamuDashboardSection", {
             explorerWidget: this.options.dashboard.options.explorerWidget,
             enable_widget: true,
             enable_section: false,
-            enable_responsive_config: this.options.enable_responsive_config
+            enable_responsive_config: this.options.enable_responsive_config,
+            embedded: true,
+            viewport: this.options.dashboard.options.viewport
         });
         if(this.options._content){
             this.options.innerDashboard.kalamuDashboard('import', this.options._content);
@@ -87,7 +90,15 @@ $.widget( "kalamu.kalamuDashboardSection", {
     },
 
     configureResponsive: function(e){
-        e.preventDefault();
+        if(e){
+            e.preventDefault();
+        }else{
+            this.options.responsive = $('<div>').kalamuResponsiveConfig({
+                datas: this.options.responsive,
+                editable: ['visible', 'class', 'id']
+            }).kalamuResponsiveConfig('option', 'datas');
+            return;
+        }
 
         var responsiveConfig = $('<div>');
         responsiveConfig.appendTo('body');
@@ -101,6 +112,15 @@ $.widget( "kalamu.kalamuDashboardSection", {
             this.options.responsive = datas;
         }, this));
         responsiveConfig.one('kalamu.responsive_config.closed', function(e){ $(e.target).remove(); });
+    },
+
+    showView: function(viewport){
+        if(this.options.responsive.visible.indexOf(viewport) === -1){
+            this.element.hide();
+        }else{
+            this.element.show();
+            this.element.find('>.kalamu-dashboard').kalamuDashboard('showView', viewport);
+        }
     },
 
     export: function(){
