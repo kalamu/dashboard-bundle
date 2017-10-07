@@ -69,6 +69,10 @@
 .kalamu-dashboard.editing .kalamu-dashboard-generic-row:hover{
     background: #f5f5f5;
 }
+.kalamu-dashboard-row .btn,
+.kalamu-dashboard-section .btn{
+    border-radius: 0 !important;
+}
 
 
 
@@ -82,7 +86,7 @@
     padding: 0;
     border-width: 0 1px 0 0;
     border-style: dashed;
-    border-color: #ccc;
+    border-color: #DDD;
 }
 .kalamu-dashboard.editing .col-config{
     box-shadow: 0px 0px 4px #555 inset;
@@ -98,18 +102,34 @@
     float: right;
     position: absolute;
     right: -3px;
-    background: #eee;
+    background: #999;
     border: 1px solid #ddd;
     border-width: 0 1px;
     cursor: col-resize;
     z-index: 10;
 }
 
+.kalamu-dashboard-col .col-config .collapse, .kalamu-dashboard-col .col-config .collapsing{
+    position: absolute !important;
+    right: 50px;
+    top: 0;
+    z-index: 10;
+}
+
+.kalamu-dashboard-col .col-widgets{
+    min-height: 50px;
+}
+.kalamu-dashboard-col .btn-add-widget{
+    margin-top: 10px;
+    width: 50px;
+}
+
 /** WIDGET **/
 .kalamu-dashboard.editing .kalamu-dashboard-widget{
-    padding-left: 11px;
-    padding-right: 11px;
-    margin-bottom: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px #BBB;
+    padding-bottom: 15px;
 }
 
 .kalamu-dashboard.editing .kalamu-dashboard-widget:hover{
@@ -128,13 +148,6 @@
 }
 
 /** SECTION **/
-.kalamu-dashboard-section{
-    background: #ccc;
-    margin: 15px -15px;
-    padding: 0 15px 15px 30px;
-    position: relative;
-}
-
 .section-config{
     margin: 10px 0;
 }
@@ -142,13 +155,8 @@
 .kalamu-dashboard-section .visible-editing-row{
     left: 30px;
 }
-
-.visible-editing-section{
-    position: absolute;
-    left: 0;
-    text-align: left !important;
-    padding: 0;
-    width: 25px;
+.kalamu-dashboard-section .panel-config{
+    background: #ccc;
 }
 
 .visible-editing-section>a{

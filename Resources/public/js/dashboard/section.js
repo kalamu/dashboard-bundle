@@ -15,18 +15,29 @@ $.widget( "kalamu.kalamuDashboardSection", {
 
         this.element.addClass('row kalamu-dashboard-section');
         this.options.enable_responsive_config = this.options.dashboard.options.enable_responsive_config;
+        this.options.enable_responsive_config = this.options.dashboard.options.enable_responsive_config;
 
-        delete_link = $('<a href="#" class="btn btn-danger btn-xs" title="'+Translator.trans('element.section.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
-        edit_link = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.sections.edit.link', {}, 'kalamu')+'"><i class="fa fa-edit"></i></a>');
-        linkUp = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
-        linkDown = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.section.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
+        this.options.header = $('<div class="panel-heading" role="tab"><h4 class="panel-title"><a role="button" data-toggle="collapse" aria-expanded="true" class="section-name"></a></h4></div>');
+        this.options.body = $('<div class="collapse panel-collapse in" role="tabpanel"><div class="panel-config"></div><div class="panel-body"></div></div>');
+        this.options.body.uniqueId();
+        this.options.header.find('a').attr('href', '#'+this.options.body.attr('id')).attr('ria-controls', this.options.body.attr('id'));
 
-        config_row = $('<div class="col-md-12 visible-editing visible-editing-section text-right">')
+        $('<div class="panel panel-primary">')
+                .append(this.options.header)
+                .append(this.options.body)
+                .appendTo(this.element);
+
+        delete_link = $('<a href="#" class="btn btn-danger btn-sm" title="'+Translator.trans('element.section.delete', {}, 'kalamu')+'"><i class="fa fa-trash"></i></a>');
+        edit_link = $('<a href="#" class="btn btn-info btn-sm" title="'+Translator.trans('element.sections.edit.link', {}, 'kalamu')+'"><i class="fa fa-edit"></i></a>');
+        linkUp = $('<a href="#" class="btn btn-info btn-sm" title="'+Translator.trans('element.section.up', {}, 'kalamu')+'"><i class="fa fa-arrow-up"></i></a>');
+        linkDown = $('<a href="#" class="btn btn-info btn-sm" title="'+Translator.trans('element.section.down', {}, 'kalamu')+'"><i class="fa fa-arrow-down"></i></a>');
+
+        config_row = $('<div class="btn-group text-right">')
                 .append(linkUp)
                 .append(linkDown)
                 .append(edit_link)
                 .append(delete_link);
-        this.element.append(config_row);
+        this.options.body.find('.panel-config').append(config_row);
 
         this._on( delete_link, { click: this._delete });
         this._on( edit_link, { click: this.editElement });
@@ -34,7 +45,7 @@ $.widget( "kalamu.kalamuDashboardSection", {
         this._on( linkDown, { click: this.down });
 
         if(this.options.enable_responsive_config){
-            responsiveConfig = $('<a href="#" class="btn btn-default btn-xs" title="'+Translator.trans('element.sections.config.link', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
+            responsiveConfig = $('<a href="#" class="btn btn-info btn-sm" title="'+Translator.trans('element.sections.config.link', {}, 'kalamu')+'"><i class="fa fa-gear"></i></a>');
             edit_link.after(responsiveConfig);
             this._on( responsiveConfig, { click: this.configureResponsive });
             if(this.options.responsive === null){
@@ -43,7 +54,7 @@ $.widget( "kalamu.kalamuDashboardSection", {
         }
 
         this.options.innerDashboard = $('<div>');
-        this.element.append(this.options.innerDashboard);
+        this.options.body.find('.panel-body').append(this.options.innerDashboard);
         this.options.innerDashboard.kalamuDashboard({
             explorerWidget: this.options.dashboard.options.explorerWidget,
             enable_widget: true,
@@ -67,7 +78,7 @@ $.widget( "kalamu.kalamuDashboardSection", {
     _updateTitle: function(){
         this.options.dashboard.options.explorerSection.kalamuElementExplorer('loadElementInfos', this.options.identifier, this.options.params, $.proxy(function(datas){
             this.options.title = datas.title;
-            this.options.edit_link.find('.section-name').text(this.options.title);
+            this.options.header.find('.section-name').text(this.options.title);
         }, this));
     },
 

@@ -6,6 +6,7 @@ $.widget( "kalamu.kalamuDashboardRow", {
         cols: null,
         enable_responsive_config: false,
         responsive: null,
+        viewport: null,
         dashboard: null
     },
 
@@ -117,6 +118,13 @@ $.widget( "kalamu.kalamuDashboardRow", {
         this.refresh();
     },
 
+    removeColumn: function(col){
+        this.options.col--;
+        if(this.options.col === 0){
+            this.element.remove();
+        }
+    },
+
     configureResponsive: function(e){
         if(e){
             e.preventDefault();
@@ -143,6 +151,7 @@ $.widget( "kalamu.kalamuDashboardRow", {
     },
 
     showView: function(viewport){
+        this.options.viewport = viewport;
         if(this.options.responsive.visible.indexOf(viewport) === -1){
             this.element.hide();
         }else{
@@ -164,7 +173,6 @@ $.widget( "kalamu.kalamuDashboardRow", {
             options = this.options.cols[x]||{md: md};
             options.resizable = resizable;
             options.dashboard = this.options.dashboard;
-
             col.kalamuDashboardCol(options);
         }
     },

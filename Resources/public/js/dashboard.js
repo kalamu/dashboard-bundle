@@ -127,10 +127,10 @@ $.widget( "kalamu.kalamuDashboard", {
         }
 
         this.element.find('.kalamu-dashboard-viewport-switch a').removeClass('active').filter('[data-viewport="'+this.options.viewport+'"]').addClass('active');
-        this.element.find('>.kalamu-dashboard-row:not(.kalamu-dashboard-generic-row)').each($.proxy(function(i, obj){
+        this.element.find('.kalamu-dashboard-row:not(.kalamu-dashboard-generic-row)').each($.proxy(function(i, obj){
             $(obj).kalamuDashboardRow('showView', this.options.viewport);
         }, this));
-        this.element.find('>.kalamu-dashboard-section').each($.proxy(function(i, obj){
+        this.element.find('.kalamu-dashboard-section').each($.proxy(function(i, obj){
             $(obj).kalamuDashboardSection('showView', this.options.viewport);
         }, this));
     },
