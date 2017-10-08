@@ -34,7 +34,7 @@ $.widget( "kalamu.kalamuDashboardWidget", {
             context: this,
             success: function(datas){
                 if(datas.content){
-                    this.element.append(datas.content);
+                    this.element.append( $('<div class="col-md-12 no-padding">').append(datas.content) );
                 }else if(datas.error){
                     this.element.append('<div class="alert alert-danger">'+datas.error+'</div>');
                 }
