@@ -93,11 +93,9 @@ $.widget( "kalamu.kalamuDashboardRow", {
     newColumn: function(e){
         e.preventDefault();
 
-        previousCol = this.element.find('.kalamu-dashboard-col:last');
-        size = previousCol.kalamuDashboardCol('option', 'md');
-        previousCol.kalamuDashboardCol('option', 'resizable', true);
         this.options.col++;
         md = Math.floor(12/this.options.col);
+
 
         col = $('<div>');
         this.element.find('>.row-cols').append(col);
@@ -108,18 +106,17 @@ $.widget( "kalamu.kalamuDashboardRow", {
         });
 
         for(var x=0; x<this.options.col; x++){
-            var responsive = this.element.find('.kalamu-dashboard-col').eq(x).kalamuDashboardCol('option', 'responsive');
-            for(var sz in responsive.size){
-                responsive.size[sz] = md;
-            }
-            this.element.find('.kalamu-dashboard-col').eq(x).kalamuDashboardCol('option', 'responsive', responsive);
-            this.element.find('.kalamu-dashboard-col').eq(x).kalamuDashboardCol('option', 'md', md);
+            this.element.find('.kalamu-dashboard-col').eq(x)
+                    .kalamuDashboardCol('setVisibleWidth', md)
+                    .kalamuDashboardCol('setResponsiveWidth', md)
+                    .kalamuDashboardCol('refresh');
         }
         this.refresh();
     },
 
     removeColumn: function(col){
         this.options.col--;
+        this.element.find('.kalamu-dashboard-col:last').kalamuDashboardCol('refresh');
         if(this.options.col === 0){
             this.element.remove();
         }

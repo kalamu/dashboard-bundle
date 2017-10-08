@@ -66,15 +66,19 @@ $.widget( "kalamu.kalamuDashboardCol", {
 
     refresh: function(){
         if(this.options.enable_responsive_config && this.options.viewport){
+            if(this.options.responsive.visible.indexOf(this.options.viewport) === -1){
+                this.element.hide();
+                return;
+            }
             this.setVisibleWidth( this.options.responsive.size[this.options.viewport] );
         }
 
-        if(this.element.next('.kalamu-dashboard-col').length){
+        if(this.element.next('.kalamu-dashboard-col:visible').length){
             this.options.resizable = true;
         }else{
             var sumMd = this.options.md;
-            this.element.siblings('.kalamu-dashboard-col').each(function(){ sumMd += $(this).kalamuDashboardCol('option', 'md'); });
-            this.options.resizable = (sumMd < 12);
+            this.element.siblings('.kalamu-dashboard-col:visible').each(function(){ sumMd += $(this).kalamuDashboardCol('option', 'md'); });
+            this.options.resizable = (sumMd !== 12);
         }
         if(this.options.resizable){
             this.enableResize();
@@ -87,8 +91,21 @@ $.widget( "kalamu.kalamuDashboardCol", {
         this.element.removeClass('col-md-'+this.options.md);
         this.options.md = width;
         this.element.addClass('col-md-'+this.options.md);
-        if(this.options.enable_responsive_config && this.options.viewport){
-            this.options.responsive.size[this.options.viewport] = width;
+    },
+
+    /**
+     * Define size in the specified viewport or all viewport if not specified
+     * @param {type} width
+     * @param {type} viewport
+     * @returns {undefined}
+     */
+    setResponsiveWidth: function(width, viewport = null){
+        if(viewport){
+            this.options.responsive.size[viewport] = width;
+        }else{
+            for(var x in this.options.responsive.size){
+                this.options.responsive.size[x] = width;
+            }
         }
     },
 
@@ -115,11 +132,11 @@ $.widget( "kalamu.kalamuDashboardCol", {
     startResize: function(e, ui){
         this.options.md_size = parseInt(this.element.parent().width() / 12);
         this.options.resizer.draggable("option", 'grid', [this.options.md_size, this.options.md_size]);
-        if(this.element.next('.kalamu-dashboard-col').length){
-            this.options.max_left = this.options.md + this.element.next('.kalamu-dashboard-col').kalamuDashboardCol('option', 'md')-1;
+        if(this.element.next('.kalamu-dashboard-col:visible').length){
+            this.options.max_left = this.options.md + this.element.next('.kalamu-dashboard-col:visible').kalamuDashboardCol('option', 'md')-1;
         }else{
             this.options.max_left = 12;
-            this.element.prevAll('.kalamu-dashboard-col').each($.proxy(function(i, obj){
+            this.element.prevAll('.kalamu-dashboard-col:visible').each($.proxy(function(i, obj){
                 this.options.max_left -= $(obj).kalamuDashboardCol('option', 'md');
             }, this));
         }
@@ -129,13 +146,23 @@ $.widget( "kalamu.kalamuDashboardCol", {
         for(var x=1; x<=12; x++){
             if(Math.abs(ui.position.left - (x*this.options.md_size)) <= (this.options.md_size/2)){
                 diff = this.options.md - x;
-                this.element.removeClass('col-md-'+this.options.md);
-                this.options.md = x;
-                this.options.responsive.size[this.options.viewport] = x;
-                this.element.addClass('col-md-'+this.options.md);
+                this.setVisibleWidth(x);
+                if(this.options.dashboard.isResponsiveResize()){
+                    this.setResponsiveWidth(x);
+                }else{
+                    this.setResponsiveWidth(x, this.options.viewport);
+                }
+
                 this.options.resizer.css('left', 'auto');
-                if(this.element.next('.kalamu-dashboard-col').length){
-                    this.element.next('.kalamu-dashboard-col').kalamuDashboardCol('option', 'md', this.element.next().kalamuDashboardCol('option', 'md')+diff );
+                var nextCol = this.element.next('.kalamu-dashboard-col:visible');
+                if(nextCol.length){
+                    var originalSize = nextCol.kalamuDashboardCol('option', 'md');
+                    if(this.options.dashboard.isResponsiveResize()){
+                        nextCol.kalamuDashboardCol('setResponsiveWidth', originalSize+diff);
+                    }else{
+                        nextCol.kalamuDashboardCol('setResponsiveWidth', originalSize+diff, this.options.viewport);
+                    }
+                    nextCol.kalamuDashboardCol('setVisibleWidth', originalSize+diff);
                 }else if(x === this.options.max_left){
                     this.disableResize();
                 }
@@ -165,7 +192,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
                     this.options.responsive.size[i] = this.options.md;
                 }, this));
             }else{
-                this.setVisibleWidth(this.options.responsive.size[this.options.viewport])
+                this.setVisibleWidth(this.options.responsive.size[this.options.viewport]);
             }
             return;
         }
@@ -181,6 +208,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
         responsiveConfig.one('kalamu.responsive_config.change', $.proxy(function(e, datas){
             this.options.responsive = datas;
             this.refresh();
+            this.element.next('.kalamu-dashboard-col').kalamuDashboardCol('refresh');
         }, this));
         responsiveConfig.one('kalamu.responsive_config.closed', function(e){ $(e.target).remove(); });
     },

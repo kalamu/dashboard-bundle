@@ -17,6 +17,23 @@
 }
 
 
+.kalamu-dashboard .kalamu-dashboard-viewport-switch .btn-group{
+    margin-left: 15px;
+}
+.kalamu-dashboard .kalamu-dashboard-viewport-switch .btn{
+    background-color: #f4f4f4 !important;
+    color: #444 !important;
+    border-color: #ddd !important;
+}
+.kalamu-dashboard .kalamu-dashboard-viewport-switch .btn.active{
+   outline-offset: 0 !important;
+   background-color: #31b0d5 !important;
+   color: #fff !important;
+   border-color: #269abc !important;
+}
+
+
+
 
 /** ROW **/
 .kalamu-dashboard.editing .kalamu-dashboard-row{
@@ -98,7 +115,7 @@
 
 .kalamu-dashboard-col .resizer-col{
     width: 5px;
-    height: 20px;
+    height: 23px;
     float: right;
     position: absolute;
     right: -3px;
@@ -150,6 +167,14 @@
 /** SECTION **/
 .section-config{
     margin: 10px 0;
+}
+
+.kalamu-dashboard-section>.panel>.panel-heading{
+    padding: 0;
+}
+.kalamu-dashboard-section>.panel>.panel-heading a{
+    padding: 10px 15px;
+    display: block;
 }
 
 .kalamu-dashboard-section .visible-editing-row{

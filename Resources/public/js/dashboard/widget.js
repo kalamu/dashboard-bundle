@@ -16,16 +16,16 @@ $.widget( "kalamu.kalamuDashboardWidget", {
         this.options.params.push({name: 'parent_md_size', value: this.element.parents('.kalamu-dashboard-col').kalamuDashboardCol('option', 'md')});
 
         this.element.text('');
-        editLink = $('<a href="#" class="btn btn-default btn-xs"><i class="fa fa-edit"></i> <span class="link-label">Modifier</span></a>');
+        editLink = $('<a href="#" class="btn btn-info btn-xs"><i class="fa fa-edit"></i> <span class="link-label">Modifier</span></a>');
         delete_link = $('<a href="#" class="btn btn-danger btn-xs"><i class="fa fa-trash"></i> <span class="link-label">supprimer le widget</span></a>');
 
         this.element.prepend( $('<div class="col-md-12 text-right delete_widget_link visible-editing visible-editing-widget">').append(editLink).append(delete_link) );
-        
+
         this._on( editLink, { click: this.edit });
         this._on( delete_link, { click: this._delete });
-        
+
         element_api = this.options.explorer.kalamuElementExplorer('option', 'element_api');
-        
+
         $.ajax({
             url: element_api+this.options.context+'/'+this.options.type+'/'+this.options.identifier,
             data: this.options.params,
@@ -61,7 +61,7 @@ $.widget( "kalamu.kalamuDashboardWidget", {
 
     _delete: function(e){
         e.preventDefault();
-        
+
         dashboard = this.options.explorer.kalamuElementExplorer('option', 'dashboard').element;
         this.element.remove();
         dashboard.trigger('kalamu.dashboard.widget_added');

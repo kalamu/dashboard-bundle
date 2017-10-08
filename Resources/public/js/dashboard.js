@@ -6,6 +6,7 @@ $.widget( "kalamu.kalamuDashboard", {
         enable_widget: false,
         enable_section: false,
         enable_responsive_config: false,
+        enable_responsive_resize: true, // resize a column in all viewport at once
         viewport: null,
         genericRow: null,
         editing: false,
@@ -60,6 +61,14 @@ $.widget( "kalamu.kalamuDashboard", {
         }
     },
 
+    isResponsiveResize: function(){
+        if(this.options.embedded){
+            return this.element.parents('.kalamu-dashboard').eq(0).kalamuDashboard('isResponsiveResize');
+        }else{
+            return this.options.enable_responsive_resize;
+        }
+    },
+
     // Ajoute la ligne générique
     _addGenericRow: function(){
         if(this.options.genericRow){
@@ -107,15 +116,25 @@ $.widget( "kalamu.kalamuDashboard", {
             xs: {title: Translator.trans('responsive_config.extra-small', {}, 'kalamu'), icon: 'fa fa-mobile'},
         };
 
-        var switcher = $('<div class="btn-group"></div>');
-        this.element.prepend('<section class="row visible-editing kalamu-dashboard-viewport-switch"><div class="col-md-12 text-right"></div></section>');
-        this.element.find('.kalamu-dashboard-viewport-switch>div').append( switcher );
+        var switcher = $('<div class="btn-group" role="group" aria-label="Switch view"></div>');
+        var piner = $('<div class="btn-group" role="group" aria-label="Active responsive resize"></div>');
+        this.element.prepend('<section class="row visible-editing kalamu-dashboard-viewport-switch stick-top"><div class="col-md-12"><div class="pull-right"></div></div></section>');
+        this.element.find('.kalamu-dashboard-viewport-switch .pull-right')
+                .append(piner)
+                .append( switcher );
 
         $.each(views, $.proxy(function(size, conf){
             var btn = $('<a href="#" class="btn btn-info btn-sm" data-viewport="'+size+'" title="'+conf.title+'"><i class="'+conf.icon+'"></i></a>');
             switcher.append(btn);
             this._on( btn, {click: this.showView} );
         }, this));
+
+        var pinBtn = $('<button class="btn btn-sm btn-info btn-responsive-resize"><i class="fa fa-thumb-tack"></i></button>');
+        piner.append( pinBtn );
+        this._on( pinBtn, {click: this.activeResponsivePin } );
+        if(this.options.enable_responsive_resize){
+            pinBtn.addClass('active');
+        }
     },
 
     showView: function(e){
@@ -133,6 +152,13 @@ $.widget( "kalamu.kalamuDashboard", {
         this.element.find('.kalamu-dashboard-section').each($.proxy(function(i, obj){
             $(obj).kalamuDashboardSection('showView', this.options.viewport);
         }, this));
+    },
+
+    activeResponsivePin: function(e){
+        e.preventDefault();
+
+        this.options.enable_responsive_resize = !this.options.enable_responsive_resize;
+        this.element.find('.kalamu-dashboard-viewport-switch .btn-responsive-resize').toggleClass('active');
     },
 
     _addSection: function(e, infos){
