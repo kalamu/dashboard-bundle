@@ -17,15 +17,45 @@
 }
 
 
+.kalamu-dashboard .kalamu-dashboard-viewport-switch .btn-group{
+    margin-left: 15px;
+}
+.kalamu-dashboard .kalamu-dashboard-viewport-switch .btn{
+    background-color: #f4f4f4 !important;
+    color: #444 !important;
+    border-color: #ddd !important;
+}
+.kalamu-dashboard .kalamu-dashboard-viewport-switch .btn.active{
+   outline-offset: 0 !important;
+   background-color: #31b0d5 !important;
+   color: #fff !important;
+   border-color: #269abc !important;
+}
+
+
+
 
 /** ROW **/
 .kalamu-dashboard.editing .kalamu-dashboard-row{
     margin:0;
-    padding: 0 5px 0 25px;
     background: #f5f5f5;
     border: 1px solid #E9E9E9;
     margin-bottom: 1px;
-    min-height: 68px;
+    display: table;
+    width: 100%;
+}
+.kalamu-dashboard.editing .kalamu-dashboard-row .row-config{
+    width: 25px;
+    display: table-cell;
+    vertical-align: top;
+}
+.kalamu-dashboard.editing .kalamu-dashboard-row .row-cols{
+    display: table-cell;
+    vertical-align: top;
+}
+.kalamu-dashboard.editing .kalamu-dashboard-row .btn-add-row{
+    display: table-cell;
+    width: 25px;
 }
 
 .kalamu-dashboard.editing .kalamu-dashboard-row:hover{
@@ -33,9 +63,6 @@
 }
 
 .visible-editing-row{
-    position: absolute;
-    left: 11px;
-    text-align: left !important;
     padding: 0;
     width: 25px;
 }
@@ -59,6 +86,10 @@
 .kalamu-dashboard.editing .kalamu-dashboard-generic-row:hover{
     background: #f5f5f5;
 }
+.kalamu-dashboard-row .btn,
+.kalamu-dashboard-section .btn{
+    border-radius: 0 !important;
+}
 
 
 
@@ -69,10 +100,13 @@
 }
 
 .kalamu-dashboard.editing .kalamu-dashboard-col{
-    padding: 0.5em;
+    padding: 0;
     border-width: 0 1px 0 0;
     border-style: dashed;
-    border-color: #ccc;
+    border-color: #DDD;
+}
+.kalamu-dashboard.editing .col-config{
+    box-shadow: 0px 0px 4px #555 inset;
 }
 
 .kalamu-dashboard.editing .kalamu-dashboard-col:last-child{
@@ -81,38 +115,38 @@
 
 .kalamu-dashboard-col .resizer-col{
     width: 5px;
-    height: 20px;
+    height: 23px;
     float: right;
     position: absolute;
     right: -3px;
-    background: #eee;
+    background: #999;
     border: 1px solid #ddd;
     border-width: 0 1px;
     cursor: col-resize;
+    z-index: 10;
 }
 
-.kalamu-dashboard-col>.visible-editing{
-    text-align: right;
+.kalamu-dashboard-col .col-config .collapse, .kalamu-dashboard-col .col-config .collapsing{
+    position: absolute !important;
+    right: 50px;
+    top: 0;
+    z-index: 10;
 }
 
-.kalamu-dashboard-col>.visible-editing a{
-    color: #fff;
-    background: #70ca63;
-    border-radius: 10px;
-    display: inline-block;
-    text-align: center;
-    width: 20px;
-    opacity: 0.4;
+.kalamu-dashboard-col .col-widgets{
+    min-height: 50px;
 }
-.kalamu-dashboard-col>.visible-editing a:hover{
-    opacity: 1;
+.kalamu-dashboard-col .btn-add-widget{
+    margin-top: 10px;
+    width: 50px;
 }
 
 /** WIDGET **/
 .kalamu-dashboard.editing .kalamu-dashboard-widget{
-    padding-left: 11px;
-    padding-right: 11px;
-    margin-bottom: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    box-shadow: 0px 0px 3px #BBB;
+    padding-bottom: 15px;
 }
 
 .kalamu-dashboard.editing .kalamu-dashboard-widget:hover{
@@ -131,27 +165,23 @@
 }
 
 /** SECTION **/
-.kalamu-dashboard-section{
-    background: #ccc;
-    margin: 15px -15px;
-    padding: 0 15px 15px 30px;
-    position: relative;
-}
-
 .section-config{
     margin: 10px 0;
+}
+
+.kalamu-dashboard-section>.panel>.panel-heading{
+    padding: 0;
+}
+.kalamu-dashboard-section>.panel>.panel-heading a{
+    padding: 10px 15px;
+    display: block;
 }
 
 .kalamu-dashboard-section .visible-editing-row{
     left: 30px;
 }
-
-.visible-editing-section{
-    position: absolute;
-    left: 0;
-    text-align: left !important;
-    padding: 0;
-    width: 25px;
+.kalamu-dashboard-section .panel-config{
+    background: #ccc;
 }
 
 .visible-editing-section>a{
@@ -165,9 +195,6 @@
 .kalamu-dashboard.editing a.visible-editing{
     display: inline-block;
 }
-.kalamu-dashboard-row .btn-add-row {
-    float: right;
-    position: relative;
-    left: 27px;
-    top: 25px;
+.kalamu-dashboard-viewport-switch{
+    margin-bottom: 10px;
 }

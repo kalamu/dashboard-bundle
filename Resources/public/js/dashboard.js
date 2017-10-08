@@ -5,33 +5,42 @@ $.widget( "kalamu.kalamuDashboard", {
         explorerSection: null,
         enable_widget: false,
         enable_section: false,
+        enable_responsive_config: false,
+        enable_responsive_resize: true, // resize a column in all viewport at once
+        viewport: null,
         genericRow: null,
-        editing: false
+        editing: false,
+        embedded: false
     },
 
     _create: function() {
         this.element.addClass('kalamu-dashboard');
-        
+
         if(this.options.explorerWidget){
             this.options.explorerWidget.kalamuElementExplorer('option', 'dashboard', this);
         }
         if(this.options.explorerSection){
             this.options.explorerSection.kalamuElementExplorer('option', 'dashboard', this);
         }
-        
+
+        if(this.options.enable_responsive_config && !this.options.embedded){
+            this._addViewSwitch();
+            this.options.viewport = 'lg';
+        }
+
         this._addGenericRow();
 
         this.addSortable();
         this.element.on('kalamu.dashboard.row_added kalamu.dashboard.section_added kalamu.dashboard.widget_added', $.proxy(function(){
             this._refresh();
         }, this));
-        
+
         this._refresh();
         if(typeof this.afterCreate === 'function'){
             this.afterCreate();
         }
     },
-    
+
     _refresh: function(){
         if(this.options.editing){
             this.removeSortable();
@@ -42,26 +51,38 @@ $.widget( "kalamu.kalamuDashboard", {
                 parent.append( $(this).detach() );
             });
             this.element.addClass('editing');
+
+            if(this.options.viewport){
+                this.showView(this.options.viewport);
+            }
         }else{
             this.removeSortable();
             this.element.removeClass('editing');
         }
     },
-    
+
+    isResponsiveResize: function(){
+        if(this.options.embedded){
+            return this.element.parents('.kalamu-dashboard').eq(0).kalamuDashboard('isResponsiveResize');
+        }else{
+            return this.options.enable_responsive_resize;
+        }
+    },
+
     // Ajoute la ligne générique
     _addGenericRow: function(){
         if(this.options.genericRow){
             this.options.genericRow.show();
             return;
         }
-        
+
         this.options.genericRow = $('<div>');
         this.element.append( this.options.genericRow );
         this.options.genericRow.kalamuDashboardGenericRow({
             enable_row: this.options.enable_widget ? true : false,
             enable_section: this.options.enable_section ? true : false,
         });
-        
+
         if(this.options.enable_widget){
             this.options.genericRow.on('kalamu.dashboard.add_row', $.proxy(function(e, nb_col){
                 e.preventDefault();
@@ -71,11 +92,11 @@ $.widget( "kalamu.kalamuDashboard", {
                 this.element.trigger('kalamu.dashboard.row_added');
             }, this));
         }
-        
+
         if(this.options.enable_section){
             this.options.genericRow.on('kalamu.dashboard.add_section', $.proxy(function(e){
                 e.preventDefault();
-                
+
                 this.options.explorerSection.kalamuElementExplorer('showElements');
 
                 addSectionFct = $.proxy(this._addSection, this);
@@ -86,7 +107,60 @@ $.widget( "kalamu.kalamuDashboard", {
             }, this));
         }
     },
-    
+
+    _addViewSwitch: function(){
+        var views = {
+            lg: {title: Translator.trans('responsive_config.large', {}, 'kalamu'), icon: 'fa fa-desktop'},
+            md: {title: Translator.trans('responsive_config.medium', {}, 'kalamu'), icon: 'fa fa-tablet'},
+            sm: {title: Translator.trans('responsive_config.small', {}, 'kalamu'), icon: 'fa fa-mobile fa-rotate-90'},
+            xs: {title: Translator.trans('responsive_config.extra-small', {}, 'kalamu'), icon: 'fa fa-mobile'},
+        };
+
+        var switcher = $('<div class="btn-group" role="group" aria-label="Switch view"></div>');
+        var piner = $('<div class="btn-group" role="group" aria-label="Active responsive resize"></div>');
+        this.element.prepend('<section class="row visible-editing kalamu-dashboard-viewport-switch stick-top"><div class="col-md-12"><div class="pull-right"></div></div></section>');
+        this.element.find('.kalamu-dashboard-viewport-switch .pull-right')
+                .append(piner)
+                .append( switcher );
+
+        $.each(views, $.proxy(function(size, conf){
+            var btn = $('<a href="#" class="btn btn-info btn-sm" data-viewport="'+size+'" title="'+conf.title+'"><i class="'+conf.icon+'"></i></a>');
+            switcher.append(btn);
+            this._on( btn, {click: this.showView} );
+        }, this));
+
+        var pinBtn = $('<button class="btn btn-sm btn-info btn-responsive-resize"><i class="fa fa-thumb-tack"></i></button>');
+        piner.append( pinBtn );
+        this._on( pinBtn, {click: this.activeResponsivePin } );
+        if(this.options.enable_responsive_resize){
+            pinBtn.addClass('active');
+        }
+    },
+
+    showView: function(e){
+        if(typeof e === 'string'){
+            this.options.viewport = e;
+        }else{
+            e.preventDefault();
+            this.options.viewport = $(e.currentTarget).data('viewport');
+        }
+
+        this.element.find('.kalamu-dashboard-viewport-switch a').removeClass('active').filter('[data-viewport="'+this.options.viewport+'"]').addClass('active');
+        this.element.find('.kalamu-dashboard-row:not(.kalamu-dashboard-generic-row)').each($.proxy(function(i, obj){
+            $(obj).kalamuDashboardRow('showView', this.options.viewport);
+        }, this));
+        this.element.find('.kalamu-dashboard-section').each($.proxy(function(i, obj){
+            $(obj).kalamuDashboardSection('showView', this.options.viewport);
+        }, this));
+    },
+
+    activeResponsivePin: function(e){
+        e.preventDefault();
+
+        this.options.enable_responsive_resize = !this.options.enable_responsive_resize;
+        this.element.find('.kalamu-dashboard-viewport-switch .btn-responsive-resize').toggleClass('active');
+    },
+
     _addSection: function(e, infos){
         section = $('<section>');
         this.element.find('>.stick-bottom').before(section);
@@ -96,7 +170,7 @@ $.widget( "kalamu.kalamuDashboard", {
             identifier: infos.identifier,
             params: infos.params
         });
-        
+
         this.element.trigger('kalamu.dashboard.section_added');
     },
 
@@ -106,7 +180,7 @@ $.widget( "kalamu.kalamuDashboard", {
      */
     export: function(){
         var json = { childs: [] };
-        
+
         var childs = this.element.children(':not(.kalamu-dashboard-generic-row)');
         for(var x=0; x<childs.length; x++){
             var infos = {};
@@ -115,22 +189,22 @@ $.widget( "kalamu.kalamuDashboard", {
             } else if (childs.eq(x).hasClass('kalamu-dashboard-section')){
                 infos = {type: 'section', datas: childs.eq(x).kalamuDashboardSection('export') };
             }
-            
+
             json.childs.push( infos );
         }
 
         return json;
     },
-    
+
     /**
      * Import dashboard content from JSON
      * @param {type} datas
      * @returns {undefined}
      */
     import: function(datas){
-        
-        this.element.children(':not(.kalamu-dashboard-generic-row)').remove();
-        
+
+        this.element.children(':not(.kalamu-dashboard-generic-row,.kalamu-dashboard-viewport-switch)').remove();
+
         $.each(datas.childs, $.proxy(function(i, child){
             if(child.type === 'row'){
                 row = $('<div>');
@@ -142,7 +216,7 @@ $.widget( "kalamu.kalamuDashboard", {
                 section.kalamuDashboardSection( $.extend(child.datas, {dashboard: this}) );
             }
         }, this));
-        
+
         this._refresh();
     },
 
@@ -213,10 +287,10 @@ $.widget( "kalamu.kalamuDashboard", {
         $(".kalamu-dashboard-col").enableSelection();
         $(".kalamu-dashboard-row").enableSelection();
     },
-    
+
     _setOption: function(key, value){
         this._super( key, value );
-        
+
         if(key === 'editing'){
             this._refresh();
         }

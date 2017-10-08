@@ -23,6 +23,21 @@ element.row.up: Move up
 element.row.down: Move down
 element.row.add_coll: Add a column
 
+element.col.config: Responsive configuration
+
 element.sections.edit.link: Edit the section
+element.sections.config.link: Responsive configuration
+
+responsive_config.title: Responsive configuration
+responsive_config.large: Large
+responsive_config.medium: Medium
+responsive_config.small: Small
+responsive_config.extra-small: Extra small
+responsive_config.visibility: Visibility
+responsive_config.size: Size
+responsive_config.class: HTML Class
+responsive_config.id: HTML Id
+responsive_config.cancel: Cancel
+responsive_config.save: Save
 
 unknown.error: Unkown error

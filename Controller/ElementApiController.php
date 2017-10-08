@@ -7,7 +7,6 @@ use Kalamu\DashboardBundle\Model\AbstractConfigurableElement;
 use Kalamu\DashboardBundle\Model\AbstractElement;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -99,9 +98,8 @@ class ElementApiController extends Controller
             }
         }
 
-        $params['parent_md_size'] = $Request->get('parent_md_size', 12);
-        if($Request->attributes->has('_content')){
-            $params['_content'] = $Request->attributes->get('_content');
+        if($Request->attributes->has('additional')){
+            $params = array_merge($Request->attributes->get('additional'), $params);
         }
         $element->setParameters($params);
 
