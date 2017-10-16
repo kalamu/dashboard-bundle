@@ -4,7 +4,7 @@ element.edit.button.label: Update
 
 add.widget.link.title: Add a Widget
 
-element.explorer.list.category.title: Liste of available elements
+element.explorer.list.category.title: List of available elements
 element.explorer.list.category.description: "Select the element that you want to add from the following list."
 element.explorer.loading: Loading...
 element.explorer.close: Close
