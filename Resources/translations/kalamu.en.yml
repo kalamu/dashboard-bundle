@@ -24,7 +24,7 @@ element.row.delete: Remove the row
 element.row.up: Move up
 element.row.down: Move down
 element.row.add_coll: Add a column
-element.row.config: Config the row
+element.row.config: Row configuration
 
 element.col.config: Responsive configuration
 
