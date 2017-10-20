@@ -14,6 +14,8 @@ element.explorer.element.title: Details of the element
 element.explorer.list.link: List of elements
 element.explorer.category: Category
 
+# category.???
+
 element.generic_row.new_line.title: "Add a row:"
 element.generic_row.line.add_n_col: '{1}1 Column|]1,Inf[ %col% Columns'
 element.generic_row.new_section.title: Add a section
@@ -22,12 +24,18 @@ element.row.delete: Remove the row
 element.row.up: Move up
 element.row.down: Move down
 element.row.add_coll: Add a column
+element.row.config: Config the row
 
 element.col.config: Responsive configuration
+
+element.section.delete: Remove the section
+element.section.up: Move up
+element.section.down: Move down
 
 element.sections.edit.link: Edit the section
 element.sections.config.link: Responsive configuration
 
+responsive_config.close: Close
 responsive_config.title: Responsive configuration
 responsive_config.large: Large
 responsive_config.medium: Medium
