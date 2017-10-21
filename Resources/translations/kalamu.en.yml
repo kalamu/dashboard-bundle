@@ -14,7 +14,7 @@ element.explorer.element.title: Details of the element
 element.explorer.list.link: List of elements
 element.explorer.category: Category
 
-# category.???
+# category.*** - You should translate the category in your implementation
 
 element.generic_row.new_line.title: "Add a row:"
 element.generic_row.line.add_n_col: '{1}1 Column|]1,Inf[ %col% Columns'
