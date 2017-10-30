@@ -52,6 +52,9 @@ $.widget( "kalamu.kalamuDashboard", {
             });
             this.element.addClass('editing');
 
+            this.element.find('.kalamu-dashboard-row').not('.kalamu-dashboard-generic-row')
+                    .kalamuDashboardRow('option', 'editing', true);
+
             if(this.options.viewport){
                 this.showView(this.options.viewport);
             }

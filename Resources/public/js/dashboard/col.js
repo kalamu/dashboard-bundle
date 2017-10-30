@@ -100,6 +100,9 @@ $.widget( "kalamu.kalamuDashboardCol", {
      * @returns {undefined}
      */
     setResponsiveWidth: function(width, viewport = null){
+        if(!this.options.enable_responsive_config){
+            return;
+        }
         if(viewport){
             this.options.responsive.size[viewport] = width;
         }else{

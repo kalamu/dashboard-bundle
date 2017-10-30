@@ -54,7 +54,7 @@ $.widget( "kalamu.kalamuDashboardRow", {
     },
 
     refresh: function(){
-        if(this.options.col < 12){
+        if(this.options.dashboard.options.editing && this.options.col < 12){
             this.options.addCol.show();
         }else{
             this.options.addCol.hide();
@@ -178,6 +178,14 @@ $.widget( "kalamu.kalamuDashboardRow", {
         e.preventDefault();
         this.element.remove();
         this.options.dashboard.element.trigger("kalamu.dashboard.delete_row");
+    },
+
+    _setOption: function(key, value){
+        this._super( key, value );
+
+        if(key === 'editing'){
+            this.refresh();
+        }
     }
 
 });
