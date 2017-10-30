@@ -1,0 +1,51 @@
+element.parameters.invalid.error: Inválido parâmetros para esse elemento
+element.add.button.label: Adicionar
+element.edit.button.label: Atualizar
+
+add.widget.link.title: Adicionar um Widget
+
+element.explorer.list.category.title: Lista de elementos disponíveis
+element.explorer.list.category.description: "Selecione o elemento que você quer adicionar da lista a seguir."
+element.explorer.loading: Carregando...
+element.explorer.close: Fechar
+element.explorer.unknown.error: Erro desconhecido
+
+element.explorer.element.title: Detalhes do elemento
+element.explorer.list.link: Lista de elementos
+element.explorer.category: Categoria
+
+# category.*** - Você precisa traduzir a categoria na sua implementação
+
+element.generic_row.new_line.title: "Adicionar uma linha:"
+element.generic_row.line.add_n_col: '{1}1 Coluna|]1,Inf[ %col% Colunas'
+element.generic_row.new_section.title: Adicionar uma seção
+
+element.row.delete: Remover a linha
+element.row.up: Subir
+element.row.down: Descer
+element.row.add_coll: Adicionar uma coluna
+element.row.config: Configuração da linha
+
+element.col.config: Configuração responsiva
+
+element.section.delete: Remover a seção
+element.section.up: Subir
+element.section.down: Descer
+
+element.sections.edit.link: Editar a seção
+element.sections.config.link: Configuração responsiva
+
+responsive_config.close: Fechar
+responsive_config.title: Configuração responsiva
+responsive_config.large: Grande
+responsive_config.medium: Médio
+responsive_config.small: Pequeno
+responsive_config.extra-small: Muito pequeno
+responsive_config.visibility: Visibilidade
+responsive_config.size: Tamanho
+responsive_config.class: Classe do HTML
+responsive_config.id: Id do HTML
+responsive_config.cancel: Cancelar
+responsive_config.save: Salvar
+
+unknown.error: Erro desconhecido
