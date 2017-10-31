@@ -1,5 +1,7 @@
 # Bundle kalamu/dashboard-bundle
 
+[![Build Status](https://travis-ci.org/kalamu/dashboard-bundle.svg?branch=master)](https://travis-ci.org/kalamu/dashboard-bundle)
+
 This bundle provide a configurable interface for users to build modulable content.
 It's can be used to build responsive content, application dashbord and more.
 
