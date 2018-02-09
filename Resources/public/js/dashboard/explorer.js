@@ -22,7 +22,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
             this.options.current_display = null;
         }, this));
     },
-    
+
     /**
      * Show the list of elements by category
      * @returns {explorerAnonym$0}
@@ -65,7 +65,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
             }, this)
         });
     },
-    
+
     /**
      * Generate HTML for the loaded elements and categories
      * @returns {undefined}
@@ -84,7 +84,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
                         '+Translator.trans('category.'+category, {}, 'kalamu')+'</a></div>');
             panel.append('<div id="category_'+category+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cat_heading_'+category+'">\n\
                             <div class="panel-body"></div></div>');
-            
+
             this.panelGroup.append( panel );
         }, {panelGroup: panelGroup}));
 
@@ -92,7 +92,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
             this.slideCategorie($(e.target).attr('id').replace('category_', ''));
         }, this));
     },
-    
+
     /**
      * Show the list of element in the category
      * @param {string} category
@@ -100,7 +100,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
      */
     slideCategorie: function(category){
         this.showElements();
-        
+
         $.each( $(this.options.elements).attr(category), $.proxy(function(name, label){
             link = $('<a href="#'+name+'"><span class="glyphicons glyphicons-more_windows"></span> '+label+'</a><br />');
             link.on('click', $.proxy(function(category, e){
@@ -109,12 +109,12 @@ $.widget( "kalamu.kalamuElementExplorer", {
             }, this.root, this.category));
             this.panel.append(link);
         }, {
-            root: this, 
+            root: this,
             panel: this.element.find('#category_'+category+' .panel-body'),
             category: category
         }));
     },
-    
+
     /**
      * Show details about the element
      * @param {type} identifier
@@ -125,14 +125,14 @@ $.widget( "kalamu.kalamuElementExplorer", {
     showElementInfos: function(identifier, params, category){
         this._loadElements($.proxy(this._showElementInfos, this, identifier, params, category));
     },
-    
+
     _showElementInfos: function(identifier, params, category){
         category = category||this._findCategory(identifier);
         this.options.current_display = category+'.'+identifier;
 
         this.element.find('.modal-title').text( Translator.trans('element.explorer.element.title', {}, 'kalamu') );
         this.element.find('.modal-body').html("<i class='fa fa-refresh fa-spin'></i> "+Translator.trans('element.explorer.loading', {}, 'kalamu'));
-        
+
         if(this.options.modalOptions){
             this.element.modal(this.options.modalOptions);
         }
@@ -140,7 +140,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
 
         this.loadElementInfos(identifier, params, $.proxy(this._renderElementInfos, this, identifier));
     },
-    
+
     /**
      * Load details about an element
      * @param {type} identifier
@@ -168,7 +168,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
 
         $.ajax(request);
     },
-    
+
     /**
      * Generate HTML to show the details about an element
      * @param {type} identifier
@@ -210,7 +210,11 @@ $.widget( "kalamu.kalamuElementExplorer", {
             dataType: 'json',
             success: $.proxy(function(identifier, datas, ApiResponse){
                 if(ApiResponse.form_valid){
-                    this.element.trigger('kalamu.dashboard.valid_element', {type: this.options.type, identifier: identifier, params: datas});
+                    this.element.trigger('kalamu.dashboard.valid_element', {
+                        context: this.options.element_context,
+                        type: this.options.type,
+                        identifier: identifier,
+                        params: datas});
                     this.element.modal('hide');
                 }else{
                     this._renderElementInfos(identifier, ApiResponse);
@@ -222,7 +226,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
         });
 
     },
-    
+
     _findCategory: function(identifier){
         categories = Object.keys(this.options.elements);
         for(x=0; x<categories.length; x++){

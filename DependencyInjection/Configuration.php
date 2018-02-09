@@ -27,8 +27,8 @@ class Configuration implements ConfigurationInterface
                             ->children()
                                 ->arrayNode('types')
                                     ->prototype('array')
-                                        ->prototype('array')
-                                            ->prototype('scalar')->end()
+                                        ->prototype('array') //categories
+                                            ->prototype('scalar')->end() // elements
                                         ->end()
                                     ->end()
                                 ->end()
