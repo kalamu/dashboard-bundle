@@ -80,7 +80,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
         $.each(this.options.elements, $.proxy(function(category, elements){
             panel = $('<div class="panel">');
             panel.append('<div class="panel-heading" role="tab" id="cat_heading_'+category+'">\n\
-                        <a class="accordion-toggle accordion-icon link-unstyled collapsed" data-toggle="collapse" data-parent="#category_selector" href="#category_'+category+'" aria-expanded="false" aria-controls="category_'+category+'">\n\
+                        <a class="accordion-toggle accordion-icon link-unstyled collapsed" data-toggle="collapse" data-parent="#element_selector" href="#category_'+category+'" aria-expanded="false" aria-controls="category_'+category+'">\n\
                         '+Translator.trans('category.'+category, {}, 'kalamu')+'</a></div>');
             panel.append('<div id="category_'+category+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cat_heading_'+category+'">\n\
                             <div class="panel-body"></div></div>');
