@@ -61,7 +61,8 @@ $.widget( "kalamu.kalamuDashboardSection", {
             enable_section: false,
             enable_responsive_config: this.options.enable_responsive_config,
             embedded: true,
-            viewport: this.options.dashboard.options.viewport
+            viewport: this.options.dashboard.options.viewport,
+            editing: this.options.dashboard.options.editing
         });
         if(this.options._content){
             this.options.innerDashboard.kalamuDashboard('import', this.options._content);
