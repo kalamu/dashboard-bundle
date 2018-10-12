@@ -251,8 +251,8 @@ $.widget( "kalamu.kalamuDashboard", {
         });
 
         // sortable pour les Widgets
-        this.element.find('.kalamu-dashboard-col').sortable({
-            connectWith: ".kalamu-dashboard-col",
+        this.element.find('.col-widgets').sortable({
+            connectWith: ".col-widgets",
             tolerance: 'pointer',
             items: '.kalamu-dashboard-widget',
             placeholder: "ui-state-highlight col-md-12",
@@ -285,9 +285,9 @@ $.widget( "kalamu.kalamuDashboard", {
         if(this.element.hasClass('ui-sortable')){
             this.element.sortable('destroy');
         }
-        this.element.find('.kalamu-dashboard-col.ui-sortable').sortable('destroy');
+        this.element.find('.col-widgets.ui-sortable').sortable('destroy');
 
-        $(".kalamu-dashboard-col").enableSelection();
+        $(".col-widgets").enableSelection();
         $(".kalamu-dashboard-row").enableSelection();
     },
 
