@@ -73,11 +73,17 @@ $.widget( "kalamu.kalamuDashboardCol", {
             this.setVisibleWidth( this.options.responsive.size[this.options.viewport] );
         }
 
+        this._refreshResizable();
+    },
+
+    _refreshResizable: function(){
         if(this.element.next('.kalamu-dashboard-col:visible').length){
             this.options.resizable = true;
         }else{
-            var sumMd = this.options.md;
-            this.element.siblings('.kalamu-dashboard-col:visible').each(function(){ sumMd += $(this).kalamuDashboardCol('option', 'md'); });
+            var sumMd = parseInt(this.options.md);
+            for(let sibling of this.element.siblings('.kalamu-dashboard-col:visible').get()){
+                sumMd += parseInt($(sibling).kalamuDashboardCol('option', 'md'));
+            }
             this.options.resizable = (sumMd !== 12);
         }
         if(this.options.resizable){
@@ -91,6 +97,11 @@ $.widget( "kalamu.kalamuDashboardCol", {
         this.element.removeClass('col-md-'+this.options.md);
         this.options.md = width;
         this.element.addClass('col-md-'+this.options.md);
+        this._refreshResizable();
+    },
+
+    getVisibleWidth: function(){
+        return this.options.md;
     },
 
     /**
@@ -252,7 +263,6 @@ $.widget( "kalamu.kalamuDashboardCol", {
         e.preventDefault();
 
         this.element.parents('.kalamu-dashboard-row').eq(0).kalamuDashboardRow('removeColumn', this.element);
-        this.element.remove();
     },
 
     export: function(){

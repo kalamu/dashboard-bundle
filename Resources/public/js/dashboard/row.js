@@ -116,10 +116,16 @@ $.widget( "kalamu.kalamuDashboardRow", {
 
     removeColumn: function(col){
         this.options.col--;
-        this.element.find('.kalamu-dashboard-col:last').kalamuDashboardCol('refresh');
         if(this.options.col === 0){
             this.element.remove();
+            return;
         }
+
+        let nbLostColumn = parseInt(col.kalamuDashboardCol('getVisibleWidth'));
+        col.remove();
+
+        let lastCol = this.element.find('.kalamu-dashboard-col:last');
+        lastCol.kalamuDashboardCol('setVisibleWidth', parseInt(lastCol.kalamuDashboardCol('getVisibleWidth')) + nbLostColumn );
     },
 
     configureResponsive: function(e){
