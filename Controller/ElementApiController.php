@@ -85,6 +85,11 @@ class ElementApiController extends Controller
     public function renderAction(Request $Request, $context, $type, $name, $format = 'json'){
         $element = $this->getElementManager()->getElement($context, $type, $name);
 
+        if($element->canReleaseSession() && $format !== 'json'){
+            // Release the session because whe don't write in it
+            $Request->getSession()->save();
+        }
+
         $params = array();
         if($element instanceof AbstractConfigurableElement){
             $form = $this->getConfigForm($element, 'show');

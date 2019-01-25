@@ -42,4 +42,18 @@ abstract class AbstractElement
         $this->parameters = $parameters;
     }
 
+    /**
+     * This method state that this element does not write in session.
+     * When this method return "true", the controller release the session.
+     * This allow concurrent requests witch improve the performances.
+     *
+     * Do not release session if you write on it like when you use forms, flashBag messages, ...
+     *
+     * @return boolean
+     */
+    public function canReleaseSession()
+    {
+        return false;
+    }
+
 }
