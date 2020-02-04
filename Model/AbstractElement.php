@@ -2,7 +2,7 @@
 
 namespace Kalamu\DashboardBundle\Model;
 
-use Symfony\Bundle\TwigBundle\TwigEngine;
+use Twig\Environment;
 
 /**
  * Abstract class for Elements
@@ -32,13 +32,14 @@ abstract class AbstractElement
      * Render the element
      * @return string
      */
-    abstract public function render(TwigEngine $templating);
+    abstract public function render(Environment $templating);
 
     /**
      * Set parameters
      * @param array $parameters
      */
-    public function setParameters($parameters){
+    public function setParameters($parameters)
+    {
         $this->parameters = $parameters;
     }
 
@@ -55,5 +56,4 @@ abstract class AbstractElement
     {
         return false;
     }
-
 }

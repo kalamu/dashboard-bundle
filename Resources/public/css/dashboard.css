@@ -32,30 +32,44 @@
    border-color: #269abc !important;
 }
 
+.row-config .btn {
+    padding: 4px 2px 4px 3px;
+}
+.col-config .btn {
+    padding: 0px 10px 0px 10px;
+}
+
 
 
 
 /** ROW **/
 .kalamu-dashboard.editing .kalamu-dashboard-row{
-    margin:0;
     background: #f5f5f5;
     border: 1px solid #E9E9E9;
     margin-bottom: 1px;
-    display: table;
+    flex-wrap: nowrap;
     width: 100%;
 }
 .kalamu-dashboard.editing .kalamu-dashboard-row .row-config{
     width: 25px;
-    display: table-cell;
     vertical-align: top;
 }
 .kalamu-dashboard.editing .kalamu-dashboard-row .row-cols{
-    display: table-cell;
+    display: flex;
     vertical-align: top;
 }
 .kalamu-dashboard.editing .kalamu-dashboard-row .btn-add-row{
-    display: table-cell;
     width: 25px;
+}
+
+.btn-add-row{
+    padding: 4px 0px 4px 0px;
+
+}
+
+.visible-editing-widget .btn, .btn-add-widget{
+    padding: 0px 10px 0px 10px;
+    margin-bottom: 5px;
 }
 
 .kalamu-dashboard.editing .kalamu-dashboard-row:hover{
@@ -162,6 +176,10 @@
 }
 .kalamu-dashboard.editing .kalamu-dashboard-widget:hover .visible-editing-widget{
     visibility: visible;
+}
+
+.kalamu-dashboard-widget {
+    padding-top: 10px;
 }
 
 /** SECTION **/

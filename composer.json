@@ -17,12 +17,14 @@
     ],
     "require": {
         "php": "^7.0",
-        "symfony/symfony": "^2.6||^3.0",
+        "symfony/framework-bundle": "^2.6||^3.0||^4.0",
         "willdurand/js-translation-bundle": "^2.5",
         "phpunit/phpunit": "^6.4"
     },
     "autoload": {
-         "psr-4": { "Kalamu\\DashboardBundle\\": "" }
+        "psr-4": {
+            "Kalamu\\DashboardBundle\\": ""
+        }
     },
     "extra": {
         "branch-alias": {

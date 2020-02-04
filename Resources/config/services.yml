@@ -8,3 +8,6 @@ services:
         arguments: ['@service_container', '%kalamu_dashboard.contexts%']
         public: true
 
+    Kalamu\DashboardBundle\Controller\ElementApiController:
+        autowire: true
+        tags: ['controller.service_arguments']
