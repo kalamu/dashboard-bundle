@@ -30,7 +30,7 @@ $.widget( "kalamu.kalamuDashboardRow", {
                 .append('<a class="btn btn-xs btn-primary" role="button" data-toggle="collapse" href="#'+btnConfig.attr('id')+'" aria-expanded="false"><i class="fa fa-bars btn-fw"></i></a>')
                 .append( btnConfig );
         this.element.append(config_row);
-        this.element.append('<div class="row-cols"></div>');
+        this.element.append('<div class="row-cols  w-100"></div>');
         this.element.append(this.options.addCol);
 
         this._on( delete_link, { click: this._delete });

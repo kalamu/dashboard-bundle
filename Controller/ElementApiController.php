@@ -10,13 +10,20 @@ use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-
+use Twig\Environment;
 
 /**
  * Controller for the Element API
  */
 class ElementApiController extends Controller
 {
+
+    protected $templating;
+
+    public function __construct(Environment $templating)
+    {
+        $this->templating = $templating;
+    }
 
     /**
      * Get the categories
@@ -36,7 +43,7 @@ class ElementApiController extends Controller
             }
         }
 
-        $datas = $this->renderView('KalamuDashboardBundle:Element:categories.json.twig',
+        $datas = $this->renderView('@KalamuDashboard/Element/categories.json.twig',
                 ['categories' => $categories]);
 
         return $this->createJsonResponse($datas);
@@ -68,9 +75,10 @@ class ElementApiController extends Controller
         }
 
         if(method_exists($element, 'renderConfigForm')){
-            $infos['form'] = $element->renderConfigForm($this->get('templating'), $form);
+            $infos['form'] = $element->renderConfigForm($this->templating, $form);
         }else{
-            $infos['form'] = $this->renderView('KalamuDashboardBundle:Element:form.html.twig', array('form' => $form->createView(), 'element' => $element));
+            $infos['form'] = $this->renderView('@KalamuDashboard/Element/form.html.twig',
+             array('form' => $form->createView(), 'element' => $element));
         }
 
         return $this->createJsonResponse(json_encode($infos));
@@ -108,7 +116,7 @@ class ElementApiController extends Controller
         }
         $element->setParameters($params);
 
-        $view = $element->render( $this->get("templating"), ('json' == $format) ? 'edit' : 'publish' );
+        $view = $element->render( $this->templating, ('json' == $format) ? 'edit' : 'publish' );
 
         if('json' == $format){
             return $this->createJsonResponse(json_encode(array('content' => $view)));

@@ -30,7 +30,7 @@ $.widget( "kalamu.kalamuDashboardCol", {
         showConfig = $('<a role="button" data-toggle="collapse" href="#'+btnConfig.attr('id')+'" aria-expanded="false" class="btn btn-xs btn-primary"><i class="fa fa-bars"></i></a>');
         this.element.find('.col-config').append(showConfig).append(btnConfig);
 
-        this.element.append('<div class="col-widgets col-md-12"></div>');
+        this.element.append('<div class="col-widgets"></div>');
         if(this.options.widgets){
             $.each(this.options.widgets, $.proxy(function(i, config){
                 widget = $('<div>');

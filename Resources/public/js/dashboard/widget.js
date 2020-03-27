@@ -8,7 +8,7 @@ $.widget( "kalamu.kalamuDashboardWidget", {
         params: null
     },
     _create: function() {
-        this.element.addClass('kalamu-dashboard-widget col-md-12');
+        this.element.addClass('kalamu-dashboard-widget');
         this.refresh();
     },
 
@@ -34,7 +34,7 @@ $.widget( "kalamu.kalamuDashboardWidget", {
             context: this,
             success: function(datas){
                 if(datas.content){
-                    this.element.append( $('<div class="col-md-12 no-padding">').append(datas.content) );
+                    this.element.append( $('<div>').append(datas.content) );
                 }else if(datas.error){
                     this.element.append('<div class="alert alert-danger">'+datas.error+'</div>');
                 }
