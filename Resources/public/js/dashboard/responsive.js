@@ -6,11 +6,11 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
 
     _create: function() {
         this.options.datas = $.extend({
-                visible: ['lg', 'md', 'sm', 'xs'],
-                size: {'lg':12, 'md':12, 'sm':12, 'xs':12},
-                class: '',
-                id: ''
-            }, this.options.datas);
+            visible: ['lg', 'md', 'sm', 'xs'],
+            size: {'lg':12, 'md':12, 'sm':12, 'xs':12},
+            class: '',
+            id: ''
+        }, this.options.datas);
 
         if(this.options.editable === null){
             this.options.editable = ['visible', 'size', 'class', 'id'];
@@ -25,8 +25,10 @@ $.widget( "kalamu.kalamuResponsiveConfig", {
 
         this.element.addClass('kalamu-responsive-config modal fade');
         this.element.append('<div class="modal-dialog"><div class="modal-content">\n\
-                            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="'+Translator.trans('responsive_config.close', {}, 'kalamu')+'">\n\
-                            <span aria-hidden="true">&times;</span></button><h4 class="modal-title"></h4></div><div class="modal-body">\n\
+                            <div class="modal-header"><h4 class="modal-title"></h4>\n\
+                            <button type="button" class="close" data-dismiss="modal" \n\
+                                aria-label="'+Translator.trans('responsive_config.close',{},'kalamu')+'">\n\
+                            <span aria-hidden="true">&times;</span></button></div><div class="modal-body">\n\
                             </div></div></div>');
 
         this.element.find('.modal-title').text(Translator.trans('responsive_config.title', {}, 'kalamu'));

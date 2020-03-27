@@ -13,8 +13,9 @@ $.widget( "kalamu.kalamuElementExplorer", {
     _create: function() {
         this.element.addClass('kalamu-element-explorer modal fade');
         this.element.append('<div class="modal-dialog modal-lg"><div class="modal-content">\n\
-                            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="'+Translator.trans('element.explorer.close', {}, 'kalamu')+'">\n\
-                            <span aria-hidden="true">&times;</span></button><h4 class="modal-title"></h4></div><div class="modal-body">\n\
+                            <div class="modal-header"><h4 class="modal-title"></h4>\n\
+                            <button type="button" class="close" data-dismiss="modal" aria-label="'+ Translator.trans('element.explorer.close', {}, 'kalamu') + '">\n\
+                            <span aria-hidden="true">&times;</span></button></div><div class="modal-body">\n\
                             </div></div></div>');
 
         this.element.on('hide.bs.modal', $.proxy(function(){
@@ -74,21 +75,32 @@ $.widget( "kalamu.kalamuElementExplorer", {
 
         this.element.find('.modal-body')
                 .html("<p>"+Translator.trans('element.explorer.list.category.description', {}, 'kalamu')+"</p>")
-                .append('<div class="panel-group" role="tablist" id="element_selector" aria-multiselectable="true">');
+            .append('<div class="panel-group" role="tablist" id="element_selector" aria-multiselectable="true">');
 
         panelGroup = this.element.find('.modal-body .panel-group');
-        $.each(this.options.elements, $.proxy(function(category, elements){
-            panel = $('<div class="panel">');
-            panel.append('<div class="panel-heading" role="tab" id="cat_heading_'+category+'">\n\
-                        <a class="accordion-toggle accordion-icon link-unstyled collapsed" data-toggle="collapse" data-parent="#element_selector" href="#category_'+category+'" aria-expanded="false" aria-controls="category_'+category+'">\n\
-                        '+Translator.trans('category.'+category, {}, 'kalamu')+'</a></div>');
-            panel.append('<div id="category_'+category+'" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cat_heading_'+category+'">\n\
-                            <div class="panel-body"></div></div>');
+        const getCollapse = (category, elements) => {
+            const trans = Translator.trans('category.'+category, {}, 'kalamu');
+            return `
+                <div class="card">
+                    <div class="card-header" id="cat_heading_${category}">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link" data-toggle="collapse" data-target="#category_${category}" aria-expanded="true" aria-controls="collapseOne">
+                                ${trans}
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="category_${category}" class="collapse" aria-labelledby="cat_heading_${category}" data-parent="#element_selector">
+                        <div class="card-body"></div>
+                    </div>
+                </div>`;
+        };
 
+        $.each(this.options.elements, $.proxy(function(category, elements){
+            const panel = getCollapse(category);
             this.panelGroup.append( panel );
         }, {panelGroup: panelGroup}));
 
-        this.element.find('.panel').one('show.bs.collapse', $.proxy(function(e){
+        this.element.find('.card').one('show.bs.collapse', $.proxy(function(e){
             this.slideCategorie($(e.target).attr('id').replace('category_', ''));
         }, this));
     },
@@ -102,7 +114,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
         this.showElements();
 
         $.each( $(this.options.elements).attr(category), $.proxy(function(name, label){
-            link = $('<a href="#'+name+'"><span class="glyphicons glyphicons-more_windows"></span> '+label+'</a><br />');
+            link = $('<a href="#'+name+'"><i class="fa fa-window-restore"></i> '+label+'</a><br />');
             link.on('click', $.proxy(function(category, e){
                 e.preventDefault();
                 this.showElementInfos($(e.currentTarget).attr('href').substr(1), {}, category);
@@ -110,7 +122,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
             this.panel.append(link);
         }, {
             root: this,
-            panel: this.element.find('#category_'+category+' .panel-body'),
+            panel: this.element.find('#category_'+category+' .card-body'),
             category: category
         }));
     },
@@ -176,6 +188,7 @@ $.widget( "kalamu.kalamuElementExplorer", {
      * @returns {undefined}
      */
     _renderElementInfos: function(identifier, infos){
+
         category = this._findCategory(identifier);
         backLink = $('<a href="#"><i class="fa fa-arrow-left"></i> '+Translator.trans('element.explorer.list.link', {}, 'kalamu')+'</a>');
         backLink.on('click', $.proxy(function(e){
@@ -185,11 +198,13 @@ $.widget( "kalamu.kalamuElementExplorer", {
 
         this.element.find('.modal-body').html('').append(backLink);
 
-        this.element.find('.modal-body').append('<span class="text-muted pull-right">'+Translator.trans('element.explorer.category', {}, 'kalamu')+' : <strong>'+Translator.trans('category.'+category, {}, 'kalamu')+'</strong></span>\n\
+        this.element.find('.modal-body').append('<span class="text-muted float-right">'
+            +Translator.trans('element.explorer.category', {}, 'kalamu')+' : <strong>'
+            +Translator.trans('category.'+category, {}, 'kalamu')+'</strong></span>\n\
             <h1>'+infos.title+'</h1>\n\
             <div class="container-fluid">\n\
             <div class="row"><div class="col-md-12 elementDescription">'+infos.description+'</div></div>\n\
-            <div class="row"><div class="col-md-12 elementForm modal-footer">'+infos.form+'</div></div>\n\
+            <div class="row"><div class="col-md-12 elementForm ">'+infos.form+'</div></div>\n\
             </div>');
         this.element.find('.modal-body .elementForm form').on('submit', $.proxy(this._validParameters, this, identifier));
     },
