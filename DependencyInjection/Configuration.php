@@ -17,10 +17,10 @@ class Configuration implements ConfigurationInterface
      */
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('kalamu_dashboard');
+        $treeBuilder = new TreeBuilder('kalamu_dashboard');
 
-        $rootNode->children()
+        $treeBuilder->getRootNode()
+                ->children()
                     ->arrayNode('contexts')
                         ->fixXmlConfig('name')
                         ->prototype('array')
