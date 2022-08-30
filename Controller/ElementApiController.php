@@ -5,7 +5,7 @@ namespace Kalamu\DashboardBundle\Controller;
 use Kalamu\DashboardBundle\Manager\ElementManager;
 use Kalamu\DashboardBundle\Model\AbstractConfigurableElement;
 use Kalamu\DashboardBundle\Model\AbstractElement;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\Form;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,7 +15,7 @@ use Twig\Environment;
 /**
  * Controller for the Element API
  */
-class ElementApiController extends Controller
+class ElementApiController extends AbstractController
 {
 
     protected $templating;
